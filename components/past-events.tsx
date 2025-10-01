@@ -46,7 +46,7 @@ export function PastEvents() {
               <img
                 src={event.image || "/placeholder.svg"}
                 alt={event.title}
-                className="w-full h-48 object-contain bg-white"
+                className="w-full h-48 object-contain bg-white p-3"
               />
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold mb-3">{event.title}</h3>
