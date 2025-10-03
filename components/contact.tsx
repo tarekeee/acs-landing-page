@@ -1,5 +1,6 @@
-import { Mail, MessageSquare, Github, Linkedin, Twitter } from "lucide-react"
+import { Mail, MessageSquare, Github, Linkedin, Twitter, Instagram } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export function Contact() {
   return (
@@ -13,7 +14,7 @@ export function Contact() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-1 gap-8">
             <div className="bg-card border border-border rounded-lg p-8">
               <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
 
@@ -28,12 +29,12 @@ export function Contact() {
                       href="mailto:contact@acsociety.club"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      contact@acsociety.club
+                      info@acsociety.club
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
+                {/* <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <MessageSquare className="w-5 h-5 text-primary" />
                   </div>
@@ -43,14 +44,21 @@ export function Contact() {
                       Join our server
                     </a>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className="mt-8 pt-8 border-t border-border">
                 <p className="font-medium mb-4">Follow Us</p>
                 <div className="flex gap-3">
-                  <Button size="icon" variant="outline" className="hover:border-primary/50 bg-transparent">
-                    <Github className="w-5 h-5" />
+                  <Button
+                    asChild
+                    size="icon"
+                    variant="outline"
+                    className="hover:border-primary/50 bg-transparent"
+                  >
+                    <Link href="https://www.instagram.com/acs_dz/" target="_blank" rel="noopener noreferrer">
+                      <Instagram className="w-5 h-5" />
+                    </Link>
                   </Button>
                   <Button size="icon" variant="outline" className="hover:border-primary/50 bg-transparent">
                     <Linkedin className="w-5 h-5" />
@@ -62,7 +70,7 @@ export function Contact() {
               </div>
             </div>
 
-            <div className="bg-card border border-border rounded-lg p-8">
+            {/* <div className="bg-card border border-border rounded-lg p-8">
               <h3 className="text-2xl font-bold mb-6">Office Hours</h3>
 
               <div className="space-y-4">
@@ -85,7 +93,7 @@ export function Contact() {
                   <p className="text-muted-foreground">123 University Ave</p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
