@@ -225,7 +225,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                 </div>
                 <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl px-4">You're all set! 🎉</h1>
                 <p className="text-muted-foreground text-base sm:text-lg mb-2 px-4">
-                  Your registration for ACS Tech Night has been confirmed.
+                  Your registration for ACS Sahra Tech has been confirmed.
                 </p>
                 <p className="text-muted-foreground text-sm sm:text-base px-4">
                   Check your email for details and event updates.
@@ -547,7 +547,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
 
                       <div className="bg-[#F5F3F0] rounded-xl p-4 sm:p-5 mt-6 sm:mt-8">
                         <p className="text-xs sm:text-sm text-muted-foreground">
-                          By submitting this form, you agree to receive event updates and communications from ACS regarding the Tech Night event.
+                          By submitting this form, you agree to receive event updates and communications from ACS regarding the Sahra Tech event.
                         </p>
                       </div>
                     </div>

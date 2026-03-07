@@ -27,7 +27,7 @@ export function EventAnnouncementBar({ onRegisterClick }: EventAnnouncementBarPr
               <span className="font-medium whitespace-nowrap text-sm sm:text-base">📍 March 12th, 2026</span>
               <span className="hidden sm:inline text-white/90">|</span>
               <span className="text-white/95 text-xs sm:text-base line-clamp-1 sm:line-clamp-none">
-                Tech Night @ Youth House Abderehman Lalaa - Workshops, Hackathon, AI Demos & Iftar
+                <img src="/logos/sahra-tech-w.svg" alt="Sahra Tech" className="inline-block lg:w-7 lg:h-7 h-5 w-5  mb-[2px] mr-1" /> @ Youth House Abderehman Lalaa - Workshops, Hackathon, AI Demos & Iftar
               </span>
             </div>
           </div>

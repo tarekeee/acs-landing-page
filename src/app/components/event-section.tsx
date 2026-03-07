@@ -85,9 +85,10 @@ const schedule = [
             <CalendarMinimalisticBoldDuotone className="w-5 h-5" />
             <span>Upcoming Event</span>
           </div>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl mb-6 tracking-tighter text-black font-['Space_Grotesk'] leading-none">
+          {/* <h2 className="text-5xl md:text-6xl lg:text-7xl mb-6 tracking-tighter text-black font-['Space_Grotesk'] leading-none">
             ACS Tech Night 2026
-          </h2>
+          </h2> */}
+          <img src="/logos/sahra-tech.svg" alt="Sahra Tech" className="mx-auto mb-6 w-[250px] sm:w-[350px] lg:w-[400px]" />
           <p className="text-gray-600 max-w-2xl mx-auto mb-10 text-lg sm:text-xl leading-relaxed">
             Join us for an extraordinary evening where technology meets community. One night, one Youth House Abderehman Lalaa transformed into a vibrant tech hub.
           </p>
@@ -143,7 +144,7 @@ const schedule = [
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h3 className="text-4xl md:text-5xl font-['Space_Grotesk'] tracking-tighter mb-4">Agenda</h3>
-            <p className="text-gray-500">What to expect on Tech Night</p>
+            <p className="text-gray-500 flex justify-center items-center gap-[8px]">What to expect on <img src="/logos/sahra-tech.svg" alt="Sahra Tech" className="inline-block w-10 h-10 mb-[12px]" /></p>
           </div>
           
           <div className="bg-white rounded-[2.5rem] p-6 sm:p-12 shadow-xl border border-black/5 relative overflow-hidden">

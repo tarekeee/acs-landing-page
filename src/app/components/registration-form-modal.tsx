@@ -62,7 +62,7 @@ export function RegistrationFormModal({ isOpen, onClose }: RegistrationFormModal
     'Web Security Essentials',
     'Secure Development Practices',
     'Security Best Practices',
-    'Robotics Demo & Hands-on',
+    'Robotics Demo & Hands-on', 
     'Community Building Strategies',
     'Panel Discussions',
     'Speed Networking Session'
@@ -207,7 +207,7 @@ export function RegistrationFormModal({ isOpen, onClose }: RegistrationFormModal
                 </button>
               </DialogTitle>
               <DialogDescription>
-                Register for ACS Tech Night 2026 - March 12th at the Youth House Abderehman Lalaa
+                Register for ACS Sahra Tech 2026 - March 12th at the Youth House Abderehman Lalaa
               </DialogDescription>
             </DialogHeader>
 
