@@ -5,7 +5,7 @@ services:
   frontend:
     build: .
     ports:
-      - "80:80" # Expose on port 80
+      - "80" # Expose on port 80
     depends_on:
       - backend
 
