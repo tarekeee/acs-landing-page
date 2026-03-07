@@ -43,11 +43,11 @@ export function HeroSection({ onJoinClick }: HeroSectionProps) {
           <div className="pointer-events-auto backdrop-blur-[14px] content-stretch flex h-[56px] items-center justify-between pl-[12px] pr-[8px] py-[8px] rounded-[56px] relative gap-3">
             <div aria-hidden="true" className="absolute border-[0.5px] border-[rgba(130,130,130,0.2)] border-solid inset-0 pointer-events-none rounded-[56px]" />
             <img src="/logos/acs.png" alt="ACS" className="h-8 w-auto shrink-0 relative z-[1]" />
-            <div className="absolute left-1/2 -translate-x-1/2 max-w-[58%] sm:max-w-[62%] flex items-center justify-center gap-1.5 sm:gap-3 text-[12px] max-[600px]:text-[9px] font-['Space_Grotesk',sans-serif] font-semibold leading-none text-[rgba(0,0,0,0.9)] whitespace-nowrap overflow-x-auto no-scrollbar">
-              <button type="button" onClick={() => scrollToSection('about')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[13px]">About</button>
-              <button type="button" onClick={() => scrollToSection('how-we-grow')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[13px]">How We Grow</button>
-              <button type="button" onClick={() => scrollToSection('events')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[13px]">Events</button>
-              <button type="button" onClick={() => scrollToSection('contact')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[13px]">Contact</button>
+            <div className="relative z-[1] flex-1 min-w-0 flex items-center gap-1.5 sm:gap-3 text-[12px] max-[600px]:text-[9px] font-['Space_Grotesk',sans-serif] font-semibold leading-none text-[rgba(0,0,0,0.9)] whitespace-nowrap overflow-x-auto no-scrollbar">
+              <button type="button" onClick={() => scrollToSection('about')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">About</button>
+              <button type="button" onClick={() => scrollToSection('how-we-grow')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">How We Grow</button>
+              <button type="button" onClick={() => scrollToSection('events')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">Events</button>
+              <button type="button" onClick={() => scrollToSection('contact')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">Contact</button>
             </div>
             <button
               type="button"
