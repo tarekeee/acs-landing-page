@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isometric Computing Flow</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f8f9fa; /* Light background matching the image */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .scene {
+            width: 100%;
+            height: 100%;
+            perspective: 2000px; /* Gives depth to the 3D space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .isometric-layer {
+            position: relative;
+            width: 800px;
+            height: 800px;
+            /* This is the magic that creates the exact isometric angle seen in the image */
+            transform-style: preserve-3d;
+            transform: rotateX(60deg) rotateZ(-45deg);
+        }
+
+        /* --- Isometric Floor Grid --- */
+        .board-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Thin, light lines for the grid */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center;
+            /* Fades the grid out nicely at the edges */
+            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
+            mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
+            pointer-events: none;
+            z-index: -1; /* Puts it at the very bottom */
+        }
+
+        /* SVG Container for Lines and Dots */
+        .flow-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Styling for the circuit lines */
+        .circuit-path {
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .fade-short { stroke: url(#fade-short); }
+        .fade-mid { stroke: url(#fade-mid); }
+        .fade-long { stroke: url(#fade-long); }
+        .fade-muted { stroke: url(#fade-muted); stroke-width: 2; } 
+
+        .data-dot {
+            fill: #ff6a00;
+            filter: drop-shadow(0 0 6px rgba(255, 106, 0, 0.8));
+        }
+
+        .data-streak {
+            fill: none;
+            stroke: #ff6a00; 
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 6px rgba(255, 106, 0, 0.8)); 
+        }
+
+        /* Radial Wave Effect styling */
+        .wave-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px; 
+            height: 180px; 
+            z-index: 1; 
+        }
+
+        .wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 106, 0, 0.3); 
+            border-radius: 28px;
+            box-shadow: 0 0 15px rgba(255, 106, 0, 0.2), inset 0 0 8px rgba(255, 106, 0, 0.1);
+            opacity: 0;
+            animation: radial-pulse 9s infinite linear;
+        }
+
+        .wave:nth-child(2) { animation-delay: 3s; }
+        .wave:nth-child(3) { animation-delay: 6s; }
+
+        @keyframes radial-pulse {
+            0% { transform: scale(0.6); opacity: 0; border-width: 3px; }
+            15% { opacity: 0.6; }
+            100% { transform: scale(4.5); opacity: 0; border-width: 1px; }
+        }
+
+        /* --- New 3D Central Chip Styling (Rounded) --- */
+        .chip {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120px;
+            height: 120px;
+            transform: translate(-50%, -50%);
+            transform-style: preserve-3d;
+            z-index: 10;
+        }
+
+        .chip-shadow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 106, 0, 0.2);
+            filter: blur(15px);
+            transform: translateZ(0px);
+            border-radius: 26px;
+            animation: shadow-pulse 3s infinite linear;
+        }
+
+        /* These layers are injected via JS to create perfect rounded 3D depth */
+        .chip-layer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #cc5500; /* Deep orange base */
+            border-radius: 26px; /* Smooth rounded corners */
+            animation: side-glow 3s infinite linear;
+        }
+
+        @keyframes side-glow {
+            0% {
+                background: #cc5500;
+                box-shadow: -1px 1px 2px rgba(255, 106, 0, 0.1);
+            }
+            45% {
+                background: #ff8833; /* Bright, glowing orange */
+                box-shadow: -1px 1px 4px rgba(255, 106, 0, 0.3);
+            }
+            100% {
+                background: #cc5500;
+                box-shadow: -1px 1px 2px rgba(255, 106, 0, 0.1);
+            }
+        }
+
+        @keyframes shadow-pulse {
+            0% { 
+                background: rgba(255, 106, 0, 0.2); 
+                filter: blur(15px); 
+                transform: translateZ(0px) scale(1);
+            }
+            45% { 
+                background: rgba(255, 106, 0, 0.6); 
+                filter: blur(24px); 
+                transform: translateZ(0px) scale(1.08); /* Glow expands outwards */
+            }
+            100% { 
+                background: rgba(255, 106, 0, 0.2); 
+                filter: blur(15px); 
+                transform: translateZ(0px) scale(1);
+            }
+        }
+
+        /* --- Floating Isometric Labels (Buttons) --- */
+        .iso-label {
+            position: absolute;
+            padding: 12px 28px;
+            border-radius: 99px;
+            border: 1px solid var(--color);
+            color: var(--color);
+            background: var(--bg-color, rgba(255, 255, 255, 0.5));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-weight: 600;
+            font-size: 18px;
+            transform: translateZ(8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05), inset 0 0 0 1px rgba(255,255,255,0.2);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .iso-label:hover {
+            transform: translateZ(24px) scale(1.05); /* Pops up on the 3D Z-axis */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,0.6);
+            background: var(--bg-hover, rgba(255, 255, 255, 0.9));
+        }
+
+        /* The main white top surface */
+        .chip-top {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            transform: translateZ(21px); /* Sits on top of the 20 layers */
+            border: 2px solid #ff6a00;
+            border-radius: 26px; /* Smooth rounded corners */
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 20px rgba(255, 106, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .chip-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 106, 0, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 106, 0, 0.15) 1px, transparent 1px);
+            background-size: 12px 12px;
+            background-position: center;
+        }
+
+        .chip-core-ring {
+            position: absolute;
+            width: 76px;
+            height: 76px;
+            border: 2px dashed rgba(255, 106, 0, 0.4);
+            border-radius: 50%;
+            animation: spin-slow 12s linear infinite;
+        }
+
+        /* Styling for the Logo Container */
+        .chip-logo {
+            position: relative;
+            z-index: 5;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff6a00;
+            animation: pulse-logo 2s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 6px rgba(255, 106, 0, 0.5));
+        }
+
+        .chip-logo svg {
+            width: 100%;
+            height: 100%;
+            /* Ensures your SVG inherits the orange color */
+            fill: currentColor; 
+        }
+
+        @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse-logo {
+            0% { transform: scale(0.95); opacity: 0.85; filter: drop-shadow(0 0 4px rgba(255, 106, 0, 0.4)); }
+            100% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 12px rgba(255, 106, 0, 0.8)); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="scene">
+        <div class="isometric-layer">
+            
+            <!-- Isometric Floor Grid Pattern -->
+            <div class="board-grid"></div>
+
+            <!-- Floating Isometric Labels -->
+            <div class="iso-label" style="top: 240px; left: 160px; --color: #333; --bg-color: rgba(255,255,255,0.5); --bg-hover: rgba(255,255,255,0.8);">Design</div>
+            <div class="iso-label" style="top: 120px; left: 330px; --color: #ff6a00; --bg-color: rgba(255, 106, 0, 0.1); --bg-hover: rgba(255, 106, 0, 0.25);">Cyber Security</div>
+            <div class="iso-label" style="top: 290px; left: 540px; --color: #333; --bg-color: rgba(255,255,255,0.5); --bg-hover: rgba(255,255,255,0.8);">Analytics</div>
+            <div class="iso-label" style="top: 570px; left: 500px; --color: #ff6a00; --bg-color: rgba(255, 106, 0, 0.1); --bg-hover: rgba(255, 106, 0, 0.25);">Robots</div>
+            <div class="iso-label" style="top: 550px; left: 100px; --color: #333; --bg-color: rgba(255,255,255,0.5); --bg-hover: rgba(255,255,255,0.8);">Management</div>
+
+            <div class="wave-center">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+
+            <!-- 3D Central Chip -->
+            <div class="chip">
+                <div class="chip-shadow"></div>
+                
+                <!-- JS dynamically inserts 20 .chip-layers here for rounded 3D depth -->
+                
+                <div class="chip-top">
+                    <div class="chip-grid"></div>
+                    <div class="chip-core-ring"></div>
+                    
+                    <!-- ========================================== -->
+                    <!-- REPLACE THIS DIV CONTENT WITH YOUR LOGO    -->
+                    <!-- ========================================== -->
+                    <div class="chip-logo">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="9" y="9" width="6" height="6" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 5l-2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <!-- ========================================== -->
+
+                </div>
+            </div>
+
+            <svg class="flow-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                    
+                    <radialGradient id="fade-short" cx="400" cy="400" r="200" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="rgba(255, 106, 0, 0.6)" />
+                        <stop offset="60%" stop-color="rgba(255, 106, 0, 0.15)" />
+                        <stop offset="100%" stop-color="rgba(255, 106, 0, 0)" />
+                    </radialGradient>
+                    
+                    <radialGradient id="fade-mid" cx="400" cy="400" r="280" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="rgba(255, 106, 0, 0.6)" />
+                        <stop offset="70%" stop-color="rgba(255, 106, 0, 0.15)" />
+                        <stop offset="100%" stop-color="rgba(255, 106, 0, 0)" />
+                    </radialGradient>
+                    
+                    <radialGradient id="fade-long" cx="400" cy="400" r="380" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="rgba(255, 106, 0, 0.6)" />
+                        <stop offset="80%" stop-color="rgba(255, 106, 0, 0.15)" />
+                        <stop offset="100%" stop-color="rgba(255, 106, 0, 0)" />
+                    </radialGradient>
+                    
+                    <radialGradient id="fade-muted" cx="400" cy="400" r="380" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="rgba(255, 106, 0, 0.15)" />
+                        <stop offset="50%" stop-color="rgba(255, 106, 0, 0.05)" />
+                        <stop offset="100%" stop-color="rgba(255, 106, 0, 0)" />
+                    </radialGradient>
+                </defs>
+
+                <g id="paths-group">
+                    <!-- Right Side -->
+                    <path class="circuit-path active-path fade-long" d="M480,330 L515,330 Q530,330 530,315 L530,150" />
+                    <path class="circuit-path inactive-path fade-muted" d="M480,350 L555,350 Q570,350 570,365 L570,500" />
+                    <path class="circuit-path active-path fade-mid" d="M480,370 L595,370 Q610,370 610,385 L610,600" />
+                    <path class="circuit-path inactive-path fade-muted" d="M480,390 L680,390 Q695,390 695,375 L695,200" />
+                    <path class="circuit-path active-path fade-short" d="M480,410 L525,410 Q540,410 540,425 L540,650" />
+                    <path class="circuit-path inactive-path fade-muted" d="M480,430 L645,430 Q660,430 660,445 L660,700" />
+                    <path class="circuit-path active-path fade-mid" d="M480,450 L575,450 Q590,450 590,435 L590,200" />
+                    <path class="circuit-path inactive-path fade-muted" d="M480,470 L700,470 Q715,470 715,485 L715,650" />
+                    
+                    <!-- Left Side -->
+                    <path class="circuit-path active-path fade-long" d="M320,330 L285,330 Q270,330 270,315 L270,100" />
+                    <path class="circuit-path inactive-path fade-muted" d="M320,350 L165,350 Q150,350 150,365 L150,500" />
+                    <path class="circuit-path active-path fade-mid" d="M320,370 L235,370 Q220,370 220,385 L220,650" />
+                    <path class="circuit-path inactive-path fade-muted" d="M320,390 L115,390 Q100,390 100,375 L100,150" />
+                    <path class="circuit-path active-path fade-short" d="M320,410 L265,410 Q250,410 250,425 L250,700" />
+                    <path class="circuit-path inactive-path fade-muted" d="M320,430 L195,430 Q180,430 180,445 L180,600" />
+                    <path class="circuit-path active-path fade-mid" d="M320,450 L245,450 Q230,450 230,435 L230,250" />
+                    <path class="circuit-path inactive-path fade-muted" d="M320,470 L135,470 Q120,470 120,485 L120,650" />
+
+                    <!-- Bottom Side -->
+                    <path class="circuit-path active-path fade-long" d="M330,480 L330,505 Q330,520 315,520 L100,520" />
+                    <path class="circuit-path inactive-path fade-muted" d="M350,480 L350,585 Q350,600 365,600 L550,600" />
+                    <path class="circuit-path active-path fade-mid" d="M370,480 L370,535 Q370,550 355,550 L200,550" />
+                    <path class="circuit-path inactive-path fade-muted" d="M390,480 L390,700 Q390,715 405,715 L600,715" />
+                    <path class="circuit-path active-path fade-short" d="M410,480 L410,515 Q410,530 425,530 L650,530" />
+                    <path class="circuit-path inactive-path fade-muted" d="M430,480 L430,635 Q430,650 445,650 L700,650" />
+                    <path class="circuit-path active-path fade-mid" d="M450,480 L450,565 Q450,580 435,580 L250,580" />
+                    <path class="circuit-path inactive-path fade-muted" d="M470,480 L470,705 Q470,720 485,720 L650,720" />
+
+                    <!-- Top Side -->
+                    <path class="circuit-path active-path fade-long" d="M330,320 L330,295 Q330,280 315,280 L150,280" />
+                    <path class="circuit-path inactive-path fade-muted" d="M350,320 L350,165 Q350,150 365,150 L500,150" />
+                    <path class="circuit-path active-path fade-mid" d="M370,320 L370,235 Q370,220 355,220 L250,220" />
+                    <path class="circuit-path inactive-path fade-muted" d="M390,320 L390,115 Q390,100 405,100 L600,100" />
+                    <path class="circuit-path active-path fade-short" d="M410,320 L410,265 Q410,250 425,250 L600,250" />
+                    <path class="circuit-path inactive-path fade-muted" d="M430,320 L430,135 Q430,120 445,120 L750,120" />
+                    <path class="circuit-path active-path fade-mid" d="M450,320 L450,195 Q450,180 435,180 L300,180" />
+                    <path class="circuit-path inactive-path fade-muted" d="M470,320 L470,215 Q470,200 485,200 L650,200" />
+                </g>
+
+                <g id="dots-group"></g>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // --- 1. Build the 3D rounded chip layers dynamically ---
+            const chip = document.querySelector('.chip');
+            const chipTop = document.querySelector('.chip-top');
+            const numLayers = 20; // 20 layers gives it a solid 20px height
+            
+            for (let i = 1; i <= numLayers; i++) {
+                const layer = document.createElement('div');
+                layer.className = 'chip-layer';
+                layer.style.transform = `translateZ(${i}px)`;
+                // Insert layers beneath the top face
+                chip.insertBefore(layer, chipTop);
+            }
+
+            // --- 2. Animate the data flowing ---
+            const dotsGroup = document.getElementById('dots-group');
+            const dotsPerPath = 1;    
+            const streaksPerPath = 1; 
+            const baseDuration = 4;   
+            
+            const activePaths = document.querySelectorAll('.active-path');
+            
+            activePaths.forEach((pathElement, index) => {
+                if (!pathElement.id) {
+                    pathElement.id = `active-path-${index}`;
+                }
+                const pathId = pathElement.id;
+                
+                const pathLength = pathElement.getTotalLength();
+                const duration = baseDuration * (pathLength / 400); 
+
+                // Inject Dots
+                for (let j = 0; j < dotsPerPath; j++) {
+                    const delay = (duration / (dotsPerPath + streaksPerPath)) * j;
+
+                    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    circle.setAttribute("r", "5");
+                    circle.setAttribute("class", "data-dot");
+                    circle.setAttribute("filter", "url(#glow)");
+
+                    const animateMotion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
+                    animateMotion.setAttribute("dur", `${duration}s`);
+                    animateMotion.setAttribute("repeatCount", "indefinite");
+                    animateMotion.setAttribute("begin", `${delay}s`);
+
+                    const animateOpacity = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+                    animateOpacity.setAttribute("attributeName", "opacity");
+                    animateOpacity.setAttribute("values", "0; 1; 1; 0");
+                    animateOpacity.setAttribute("keyTimes", "0; 0.1; 0.9; 1");
+                    animateOpacity.setAttribute("dur", `${duration}s`);
+                    animateOpacity.setAttribute("begin", `${delay}s`);
+                    animateOpacity.setAttribute("repeatCount", "indefinite");
+
+                    const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
+                    mpath.setAttributeNS("http://www.w3.org/1999/xlink", "href", `#${pathId}`);
+
+                    animateMotion.appendChild(mpath);
+                    circle.appendChild(animateMotion);
+                    circle.appendChild(animateOpacity);
+                    dotsGroup.appendChild(circle);
+                }
+
+                // Inject Data Streaks
+                for (let k = 0; k < streaksPerPath; k++) {
+                    const delay = (duration / (dotsPerPath + streaksPerPath)) * (k + dotsPerPath);
+                    const streakLength = 50; 
+
+                    const streak = pathElement.cloneNode();
+                    streak.removeAttribute('id');
+                    
+                    streak.setAttribute('class', 'data-streak');
+                    streak.setAttribute('filter', 'url(#glow)');
+                    
+                    streak.setAttribute('stroke-dasharray', `${streakLength} ${pathLength + streakLength}`);
+                    
+                    const animateDash = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+                    animateDash.setAttribute("attributeName", "stroke-dashoffset");
+                    animateDash.setAttribute("values", `${streakLength}; -${pathLength}`);
+                    animateDash.setAttribute("dur", `${duration}s`);
+                    animateDash.setAttribute("begin", `${delay}s`);
+                    animateDash.setAttribute("repeatCount", "indefinite");
+
+                    const animateOpacity = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+                    animateOpacity.setAttribute("attributeName", "opacity");
+                    animateOpacity.setAttribute("values", "0; 1; 1; 0");
+                    animateOpacity.setAttribute("keyTimes", "0; 0.1; 0.9; 1");
+                    animateOpacity.setAttribute("dur", `${duration}s`);
+                    animateOpacity.setAttribute("begin", `${delay}s`);
+                    animateOpacity.setAttribute("repeatCount", "indefinite");
+
+                    streak.appendChild(animateDash);
+                    streak.appendChild(animateOpacity);
+                    dotsGroup.appendChild(streak);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
