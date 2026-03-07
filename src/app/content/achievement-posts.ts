@@ -38,7 +38,7 @@ export const achievementPosts: AchievementPost[] = [
     excerpt: 'A long, demanding journey from national rounds to regional competition, ending with a global win for ACS.',
     author: 'ACS Tech Team',
     publishDate: 'March 2026',
-    coverImage: '/ict.png',
+    coverImage: '/ict.webp',
     paragraphs: [
       'Huawei ICT 2025 tested us across every stage. We began at the national level, where our team had to prove consistency, technical depth, and composure to advance.',
       'The regional stage raised the bar even higher. Weeks of intense preparation, mock evaluations, and nonstop iteration helped us compete against top teams and keep moving forward.',
@@ -54,7 +54,7 @@ export const achievementPosts: AchievementPost[] = [
     excerpt: 'Representing our country at BlackHat MEA while building meaningful international connections in cybersecurity.',
     author: 'ACS Security Circle',
     publishDate: 'March 2026',
-    coverImage: '/blackhat.png',
+    coverImage: '/blackhat.webp',
     paragraphs: [
       'At BlackHat MEA, ACS proudly represented our country on an international cybersecurity stage. Our presence reflected the growth of local talent and the ambition of our community.',
       'Throughout the event, we connected with researchers, engineers, and teams from different regions. Those conversations opened doors for collaboration, mentorship, and future opportunities.',

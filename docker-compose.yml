@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  # Service 1: Your Frontend (React + Nginx)
+  frontend:
+    build: .
+    ports:
+      - "80:80" # Expose on port 80
+    depends_on:
+      - backend
+
+  # Service 2: Your Backend (Node Proxy)
+  backend:
+    build: ./server # Tells Docker to look in the /server folder
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production

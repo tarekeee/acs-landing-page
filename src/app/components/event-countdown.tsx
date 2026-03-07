@@ -40,7 +40,7 @@ export function EventCountdown({ isMobile = false }: { isMobile?: boolean }) {
 
   return (
     <div 
-      onClick={() => document.getElementById('events')?.scrollIntoView({ behavior: 'smooth' })}
+      onClick={() => document.getElementById('event')?.scrollIntoView({ behavior: 'smooth' })}
       className={`bg-white text-black rounded-full font-semibold cursor-pointer hover:scale-105 hover:shadow-lg transition-all duration-300 shadow-md flex items-center justify-center overflow-hidden border border-black/5 ${
         isMobile ? 'px-6 py-3 w-full max-w-[320px]' : 'px-8 py-3'
       }`}

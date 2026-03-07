@@ -58,14 +58,16 @@ export function RegistrationFormModal({ isOpen, onClose }: RegistrationFormModal
   ];
   const interestOptions = ['AI', 'Cybersecurity', 'Robotics', 'Entrepreneurship', 'Community'];
   const sessionOptions = [
-    'AI Fundamentals Workshop',
-    'Cybersecurity Essentials',
+    'AI Fundamentals in Business Workshop',
+    'Web Security Essentials',
+    'Secure Development Practices',
+    'Security Best Practices',
     'Robotics Demo & Hands-on',
-    'Startup Pitch Masterclass',
     'Community Building Strategies',
-    'Hackathon Presentations',
+    'Panel Discussions',
     'Speed Networking Session'
   ];
+
   const hearAboutOptions = [
     'Social Media',
     'Friend/Colleague',
@@ -123,10 +125,7 @@ export function RegistrationFormModal({ isOpen, onClose }: RegistrationFormModal
       };
 
       // CHANGE IS HERE: Prepend the proxy URL
-      const proxyUrl = 'https://corsproxy.io/?url=';
-      const targetUrl = 'https://script.google.com/macros/s/AKfycbzkB-EJRKaxOuvmw5x9c2c5ZSdpRmZBWeqdhnt_XbZncAstoEreGlOGRAit96FbUjJv/exec';
-
-      const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), {
+      const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

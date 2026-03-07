@@ -35,7 +35,7 @@ export function PastEventsSection() {
           <div className="group cursor-pointer">
             <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-6 group-hover:shadow-xl transition-shadow duration-500 flex items-center justify-center">
               <img
-                src="/afrobot.JPG"
+                src="/afrobot.webp"
                 alt="Afrobot event placeholder"
                 className="absolute inset-0 w-full h-full object-cover scale-110 blur-[2px] group-hover:scale-125 transition-transform duration-700"
               />
@@ -86,7 +86,7 @@ export function PastEventsSection() {
           <div className="group cursor-pointer">
             <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-6 group-hover:shadow-xl transition-shadow duration-500 flex items-center justify-center">
               <img
-                src="/jisr.jpg"
+                src="/jisr.webp"
                 alt="Ideathon event placeholder"
                 className="absolute inset-0 w-full h-full object-cover scale-110 blur-[2px] group-hover:scale-125 transition-transform duration-700"
               />

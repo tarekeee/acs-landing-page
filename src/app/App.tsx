@@ -28,8 +28,7 @@ export default function App() {
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState<string | null>(null);
 
-  const WAITLIST_PROXY_URL = 'https://corsproxy.io/?url=';
-  const JOIN_WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz63VnmbdTmFXPB1I6uQJg-r2AsfqcHolVwIQdUiauKmqvaM4Qa-cTwwrlLmDNMWF2b/exec';
+
 
   const showRegistrationClosedPopup = () => {
     setNotifySuccess(false);
@@ -62,7 +61,7 @@ export default function App() {
         submittedAt: new Date().toISOString(),
       };
 
-      const response = await fetch(WAITLIST_PROXY_URL + encodeURIComponent(JOIN_WAITLIST_ENDPOINT), {
+      const response = await fetch('/api/waitlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,14 +129,14 @@ export default function App() {
   }
 
   return (
-    <div className="size-full">
+    <div className="size-full pb-24 lg:pb-0">
       <EventAnnouncementBar onRegisterClick={openEventRegistrationForm} />
       <HeroSection onJoinClick={showRegistrationClosedPopup} />
       <EventSection onRegisterClick={openEventRegistrationForm} />
       <WhoWeAreSection />
       <StructureSection onPartnershipClick={() => navigateTo('/contact-us')} />
       <AchievementSection onOpenPost={navigateTo} />
-      <GrowthSection />
+      <GrowthSection onRegisterClick={showRegistrationClosedPopup} />
       <LearningPathSection />
       <ImpactSection />
       <PastEventsSection />

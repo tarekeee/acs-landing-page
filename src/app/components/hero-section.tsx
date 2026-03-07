@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 import HeroImport from "../../imports/Hero3-12-554";
 import { EventCountdown } from './event-countdown';
 
@@ -9,54 +6,16 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ onJoinClick }: HeroSectionProps) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const handleJoinClick = () => {
-    setIsMobileMenuOpen(false);
     onJoinClick();
   };
 
   const scrollToSection = (id: string) => {
-    setIsMobileMenuOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <div className="w-full relative bg-[#F5F3F0]">
-      {/* Full-screen Blur Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-[#F5F3F0]/85 backdrop-blur-xl z-[100] flex flex-col p-6 md:hidden"
-          >
-            <div className="flex justify-end items-center h-[60px] mb-8">
-              <button 
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2 rounded-full hover:bg-black/5 transition-colors"
-              >
-                <X className="w-8 h-8 text-black" />
-              </button>
-            </div>
-            <div className="flex flex-col gap-8 text-2xl font-medium items-center justify-center flex-1 pb-20">
-              <button onClick={() => scrollToSection('about')} className="text-black hover:text-[#E85102] transition-colors">About</button>
-              <button onClick={() => scrollToSection('how-we-grow')} className="text-black hover:text-[#E85102] transition-colors">How We Grow</button>
-              <button onClick={() => scrollToSection('events')} className="text-black hover:text-[#E85102] transition-colors">Events</button>
-              <button onClick={() => scrollToSection('contact')} className="text-black hover:text-[#E85102] transition-colors">Contact</button>
-              <button 
-                onClick={handleJoinClick}
-                className="mt-6 bg-[#E85102] text-white py-4 px-12 rounded-full text-center hover:bg-[#FF5722] transition-all font-semibold shadow-lg hover:shadow-xl text-xl"
-              >
-                Join Us
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Hero container with fixed height */}
       <div className="w-full h-[100svh] min-h-[600px] sm:min-h-[700px] lg:min-h-[800px] relative overflow-hidden">
         {/* 
@@ -79,14 +38,25 @@ export function HeroSection({ onJoinClick }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* Mobile Hamburger Button Overlay over existing Navbar */}
-        <div className="lg:hidden absolute top-[20px] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] h-[60px] z-[60] flex items-center justify-end pr-4 pointer-events-none">
-          <button 
-            onClick={() => setIsMobileMenuOpen(true)}
-            className="pointer-events-auto p-2 text-black/90 hover:text-[#E85102] transition-colors"
-          >
-            <Menu className="w-7 h-7" />
-          </button>
+        {/* Mobile floating bottom navbar */}
+        <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-[620px] z-[90] pointer-events-none">
+          <div className="pointer-events-auto backdrop-blur-[14px] content-stretch flex h-[56px] items-center justify-between pl-[12px] pr-[8px] py-[8px] rounded-[56px] relative gap-3">
+            <div aria-hidden="true" className="absolute border-[0.5px] border-[rgba(130,130,130,0.2)] border-solid inset-0 pointer-events-none rounded-[56px]" />
+            <img src="/logos/acs.png" alt="ACS" className="h-8 w-auto shrink-0 relative z-[1]" />
+            <div className="absolute left-1/2 -translate-x-1/2 max-w-[58%] sm:max-w-[62%] flex items-center justify-center gap-1.5 sm:gap-3 text-[12px] max-[600px]:text-[9px] font-['Space_Grotesk',sans-serif] font-semibold leading-none text-[rgba(0,0,0,0.9)] whitespace-nowrap overflow-x-auto no-scrollbar">
+              <button type="button" onClick={() => scrollToSection('about')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[13px]">About</button>
+              <button type="button" onClick={() => scrollToSection('how-we-grow')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[13px]">How We Grow</button>
+              <button type="button" onClick={() => scrollToSection('events')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[13px]">Events</button>
+              <button type="button" onClick={() => scrollToSection('contact')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[13px]">Contact</button>
+            </div>
+            <button
+              type="button"
+              onClick={handleJoinClick}
+              className="relative z-[1] shrink-0 h-[40px] px-4 rounded-[999px] bg-[#FF5722] text-white text-[12px] font-['Space_Grotesk',sans-serif] font-semibold leading-none hover:bg-[#E64A19] transition-colors"
+            >
+              Join Us
+            </button>
+          </div>
         </div>
       </div>
 
@@ -124,7 +94,6 @@ export function HeroSection({ onJoinClick }: HeroSectionProps) {
             width: calc(100% - 2rem) !important;
             top: 20px !important;
             height: 60px !important;
-            padding-right: 60px !important; /* space for overlay hamburger */
             justify-content: flex-start !important;
           }
           

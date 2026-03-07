@@ -1,6 +1,10 @@
 import { ArrowUpRight } from 'lucide-react';
 
-export function GrowthSection() {
+interface GrowthSectionProps {
+  onRegisterClick: () => void;
+}
+
+export function GrowthSection({ onRegisterClick }: GrowthSectionProps) {
   return (
     <section id="how-we-grow" className="min-h-screen bg-[#F5F3F0] py-16">
       <div className="max-w-7xl mx-auto px-6">
@@ -71,14 +75,18 @@ export function GrowthSection() {
             </p>
           </div>
 
-          <div className="bg-[#FF5722] text-white p-8 rounded-2xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer group">
+          <button
+            type="button"
+            onClick={onRegisterClick}
+            className="bg-[#FF5722] text-white p-8 rounded-2xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer group text-left"
+          >
             <div className="text-sm tracking-wide opacity-90 mb-3 font-medium">ACCESS</div>
             <h3 className="text-2xl mb-4">OPEN ACCESS</h3>
             <p className="text-white/90 text-sm">
               As part of the Youth House, our resources are open to all members, supporting learning and growth for everyone.
             </p>
             <ArrowUpRight className="w-6 h-6 mt-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-          </div>
+          </button>
         </div>
       </div>
     </section>
