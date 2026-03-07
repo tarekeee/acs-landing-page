@@ -4,7 +4,7 @@ services:
   # Service 1: Your Frontend (React + Nginx)
   frontend:
     build: .
-    ports:
+    expose:
       - "80" # Expose on port 80
     depends_on:
       - backend
