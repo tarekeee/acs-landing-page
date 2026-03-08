@@ -60,9 +60,9 @@ export function RegistrationFormModal({ isOpen, onClose }: RegistrationFormModal
   const sessionOptions = [
     'AI Fundamentals in Business Workshop',
     'Web Security Essentials',
-    'Secure Development Practices',
-    'Security Best Practices',
-    'Robotics Demo & Hands-on', 
+    'Reversing Mobile applications for fun and profits',
+    'Forensic Memory Analysis: Uncovering Digital Footprints in RAM',
+    'Robotics Demo & Hands-on',
     'Community Building Strategies',
     'Panel Discussions',
     'Speed Networking Session'

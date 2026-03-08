@@ -42,32 +42,28 @@ export function EventSection({ onRegisterClick }: EventSectionProps) {
 const schedule = [
     {
       time: '14:00 - 15:30',
-      activity: 'Doors Open & The First Connection: Participant check-in, booth setups, and early ice-breakers. Have your digital business cards ready—networking starts the moment you walk in!',
+      activity: 'Check-in: Participant registration, booth setups, and early networking.',
       type: 'check-in'
     },
     {
       time: '16:00 - 18:30',
-      activity: 'The Brain (Phase 1): Dive into immersive Cybersec & AI workshops, explore the interactive Robotics/Light Showcase, and start exchanging ideas with startup reps on the floor.',
+      activity: 'Workshops: Cybersec & AI sessions, interactive Robotics showcase, and startup networking.',
       type: 'workshops'
     },
     {
       time: '18:45 - 20:00',
-      activity: 'The Heart: Communal Youth Ftoor. Break your fast side-by-side with peers, tech innovators, and startup founders. The ultimate casual networking experience.',
+      activity: 'Ftoor: Communal dinner with tech innovators and startup founders.',
       type: 'ftoor'
     },
     {
-      time: '20:00 - 21:00',
-      activity: 'The Brain (Phase 2) & Tech Sahra: Grab a coffee and jump back in! Workshops resume for advanced deep-dives, the Robotics showcase lights up the night, and open networking continues across all stands.',
-      type: 'workshops'
+      time: '20:00 - 22:00',
+      activity: 'Talks & Panels: High-level panels with industry leaders and ecosystem decision-makers.',
+      type: 'panels/talks'
     },
+   
     {
-      time: '21:00 - 22:45',
-      activity: 'The Vision: High-Level Sahra Panels. Join top-tier ecosystem decision-makers, industry leaders, and surprise VIP guests as they debate the future of youth entrepreneurship and tech.',
-      type: 'panels'
-    },
-    {
-      time: '22:45 - 23:30',
-      activity: 'The Pulse: Late-Night Opportunities Lounge. Seal the deal, exchange final contacts, interact with startup booths, and enjoy the closing Sahra vibes.',
+      time: '22:00 - 23:30',
+      activity: 'Networking: Late-night opportunities lounge and closing vibes.',
       type: 'networking'
     }
 ];

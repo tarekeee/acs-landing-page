@@ -59,8 +59,8 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
   const sessionOptions = [
     'AI Fundamentals in Business Workshop',
     'Web Security Essentials',
-    'Secure Development Practices',
-    'Security Best Practices',
+    'Reversing Mobile applications for fun and profits',
+    'Forensic Memory Analysis: Uncovering Digital Footprints in RAM',
     'Robotics Demo & Hands-on',
     'Community Building Strategies',
     'Panel Discussions',
@@ -182,7 +182,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
       <div className="fixed top-0 left-0 right-0 bg-white border-b border-black/10 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-            <div className="text-sm sm:text-lg font-medium truncate">ACS Tech Night Registration</div>
+            <div className="text-sm sm:text-lg font-medium truncate">Registration for <img src="/logos/sahra-tech.svg" alt="Sahra Tech" className="inline-block w-8 h-8 mb-2 ml-2" /> </div>
             {!isSuccess && (
               <div className="flex sm:hidden items-center gap-2 text-xs text-muted-foreground flex-shrink-0">
                 <span>{currentStep}/3</span>
