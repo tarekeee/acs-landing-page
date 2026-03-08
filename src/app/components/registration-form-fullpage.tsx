@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { X, ChevronRight, ChevronLeft, Check, ArrowRight } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft, Check, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
 import { ALGERIAN_WILAYAS, GENDER_OPTIONS, REGISTRATION_ENDPOINT } from '../content/registration-options';
+import { useLanguage } from '../i18n/LanguageContext';
+import { LanguageSwitcher } from './language-switcher';
 
 interface RegistrationFormFullpageProps {
   isOpen: boolean;
@@ -31,6 +33,7 @@ type FormData = {
 };
 
 export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFullpageProps) {
+  const { t, isRTL } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -50,10 +53,10 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
 
   const statusOptions = ['Student', 'Freelancer', 'Entrepreneur', 'Professional'];
   const pathwayOptions = [
-    { value: 'trailblazer', label: 'Trailblazer', description: 'Pioneer new paths in technology', emoji: '🚀' },
-    { value: 'architect', label: 'Architect', description: 'Design and build systems', emoji: '🏗️' },
-    { value: 'catalyst', label: 'Catalyst', description: 'Drive change and innovation', emoji: '⚡' },
-    { value: 'navigator', label: 'Navigator', description: 'Guide teams and projects', emoji: '🧭' }
+    { value: 'trailblazer', emoji: '🚀' },
+    { value: 'architect', emoji: '🏗️' },
+    { value: 'catalyst', emoji: '⚡' },
+    { value: 'navigator', emoji: '🧭' }
   ];
   const interestOptions = ['AI', 'Cybersecurity', 'Robotics', 'Entrepreneurship', 'Community'];
   const sessionOptions = [
@@ -61,7 +64,9 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
     'Web Security Essentials',
     'Reversing Mobile applications for fun and profits',
     'Forensic Memory Analysis: Uncovering Digital Footprints in RAM',
-    'Robotics Demo & Hands-on',
+    'Gaming Demo & Hands-on',
+    'Robotics Foundations Workshop',
+    'Robotics & Intelligent Systems Workshop',
     'Community Building Strategies',
     'Panel Discussions',
     'Speed Networking Session'
@@ -151,7 +156,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
 
     } catch (error) {
       console.error(error);
-      setSubmitError('Could not submit your registration. Please try again.');
+      setSubmitError(t.registration.submitError);
     } finally {
       setIsSubmitting(false);
     }
@@ -182,7 +187,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
       <div className="fixed top-0 left-0 right-0 bg-white border-b border-black/10 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-            <div className="text-sm sm:text-lg font-medium truncate">Registration for <img src="/logos/sahra-tech.svg" alt="Sahra Tech" className="inline-block w-8 h-8 mb-2 ml-2" /> </div>
+            <div className="text-sm sm:text-lg font-medium truncate">{t.registration.registrationFor} <img src="/logos/sahra-tech.svg" alt="Sahra Tech" className="inline-block w-8 h-8 mb-2 ml-2" /> </div>
             {!isSuccess && (
               <div className="flex sm:hidden items-center gap-2 text-xs text-muted-foreground flex-shrink-0">
                 <span>{currentStep}/3</span>
@@ -190,17 +195,20 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
             )}
             {!isSuccess && (
               <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
-                <span>Step {currentStep} of 3</span>
+                <span>{t.registration.step} {currentStep} {t.registration.of} 3</span>
               </div>
             )}
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 sm:p-2 hover:bg-black/5 rounded-lg transition-colors flex-shrink-0"
-            aria-label="Close"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <LanguageSwitcher />
+            <button
+              onClick={onClose}
+              className="p-1.5 sm:p-2 hover:bg-black/5 rounded-lg transition-colors flex-shrink-0"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
         
         {/* Progress Bar */}
@@ -223,12 +231,12 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Check className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" />
                 </div>
-                <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl px-4">You're all set! 🎉</h1>
+                <h1 className="mb-3 sm:mb-4 text-2xl sm:text-3xl px-4">{t.registration.successTitle}</h1>
                 <p className="text-muted-foreground text-base sm:text-lg mb-2 px-4">
-                  Your registration for ACS Sahra Tech has been confirmed.
+                  {t.registration.successMessage}
                 </p>
                 <p className="text-muted-foreground text-sm sm:text-base px-4">
-                  Check your email for details and event updates.
+                  {t.registration.successNote}
                 </p>
               </div>
             ) : (
@@ -236,36 +244,36 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                 <input
                   type="hidden"
                   {...register('fieldOfInterest', {
-                    validate: (value) => value.length > 0 || 'Select at least one field of interest',
+                    validate: (value) => value.length > 0 || t.registration.interestsError,
                   })}
                 />
                 <input
                   type="hidden"
                   {...register('sessions', {
-                    validate: (value) => value.length > 0 || 'Select at least one session',
+                    validate: (value) => value.length > 0 || t.registration.sessionsError,
                   })}
                 />
                 {/* Step 1: Who are you? */}
                 {currentStep === 1 && (
                   <div className="space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
                     <div>
-                      <h1 className="mb-2 text-2xl sm:text-3xl">Let's start with the basics</h1>
-                      <p className="text-muted-foreground text-sm sm:text-base">Tell us a bit about yourself</p>
+                      <h1 className="mb-2 text-2xl sm:text-3xl">{t.registration.step1Title}</h1>
+                      <p className="text-muted-foreground text-sm sm:text-base">{t.registration.step1Subtitle}</p>
                     </div>
 
                     <div className="space-y-5 sm:space-y-6">
                       <div>
-                        <Label htmlFor="fullName" className="text-sm sm:text-base">What's your full name? *</Label>
+                        <Label htmlFor="fullName" className="text-sm sm:text-base">{t.registration.fullName}</Label>
                         <Input
                           id="fullName"
                           {...register('fullName', {
-                            required: 'Please enter your full name',
+                            required: t.registration.fullNameError,
                             pattern: {
                               value: fullNamePattern,
-                              message: 'Please enter a valid full name',
+                              message: t.registration.fullNameInvalid,
                             },
                           })}
-                          placeholder="Enter your full name"
+                          placeholder={t.registration.fullNamePlaceholder}
                           className="mt-2 h-11 sm:h-12 text-base sm:text-lg"
                           autoFocus
                         />
@@ -275,17 +283,17 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       </div>
 
                       <div>
-                        <Label htmlFor="phone" className="text-sm sm:text-base">Phone number (WhatsApp) *</Label>
+                        <Label htmlFor="phone" className="text-sm sm:text-base">{t.registration.phone}</Label>
                         <Input
                           id="phone"
                           {...register('phone', {
-                            required: 'Please enter your phone number',
+                            required: t.registration.phoneError,
                             pattern: {
                               value: phonePattern,
-                              message: 'Use a valid Algerian phone number (e.g., +213 5XX XXX XXX)',
+                              message: t.registration.phoneInvalid,
                             },
                           })}
-                          placeholder="+213 XXX XXX XXX"
+                          placeholder={t.registration.phonePlaceholder}
                           className="mt-2 h-11 sm:h-12 text-base sm:text-lg"
                         />
                         {errors.phone && (
@@ -294,18 +302,18 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       </div>
 
                       <div>
-                        <Label htmlFor="email" className="text-sm sm:text-base">Email address *</Label>
+                        <Label htmlFor="email" className="text-sm sm:text-base">{t.registration.emailLabel}</Label>
                         <Input
                           id="email"
                           type="email"
                           {...register('email', {
-                            required: 'Please enter your email',
+                            required: t.registration.emailError,
                             pattern: {
                               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                              message: 'Please enter a valid email address'
+                              message: t.registration.emailInvalid
                             }
                           })}
-                          placeholder="your.email@example.com"
+                          placeholder={t.registration.emailPlaceholder}
                           className="mt-2 h-11 sm:h-12 text-base sm:text-lg"
                         />
                         {errors.email && (
@@ -314,7 +322,24 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       </div>
 
                       <div>
-                        <Label htmlFor="birthdate" className="text-sm sm:text-base">Birthdate *</Label>
+                        <Label htmlFor="birthdate" className="text-sm sm:text-base">{t.registration.birthdate}</Label>
+                        {isRTL && (
+                          <style>{`
+                            #birthdate {
+                              display: flex !important;
+                              flex-direction: row-reverse !important;
+                              justify-content: space-between !important;
+                              align-items: center !important;
+                              width: 100% !important;
+                            }
+                            #birthdate::-webkit-datetime-edit {
+                              text-align: right !important;
+                            }
+                            #birthdate::-webkit-calendar-picker-indicator {
+                              margin: 0 !important;
+                            }
+                          `}</style>
+                        )}
                         <Input
                           id="birthdate"
                           type="date"
@@ -327,13 +352,13 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       </div>
 
                       <div>
-                        <Label htmlFor="gender" className="text-sm sm:text-base">Gender *</Label>
+                        <Label htmlFor="gender" className="text-sm sm:text-base">{t.registration.gender}</Label>
                         <select
                           id="gender"
-                          {...register('gender', { required: 'Please select your gender' })}
+                          {...register('gender', { required: t.registration.genderError })}
                           className="w-full mt-2 h-11 sm:h-12 px-3 sm:px-4 text-base sm:text-lg border-2 border-black/10 rounded-xl focus:outline-none focus:ring-4 focus:ring-black/10 focus:border-black transition-all"
                         >
-                          <option value="">Select gender</option>
+                          <option value="">{t.registration.genderPlaceholder}</option>
                           {GENDER_OPTIONS.map((gender) => (
                             <option key={gender} value={gender}>
                               {gender}
@@ -346,13 +371,13 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       </div>
 
                       <div>
-                        <Label htmlFor="wilaya" className="text-sm sm:text-base">Which wilaya are you from? *</Label>
+                        <Label htmlFor="wilaya" className="text-sm sm:text-base">{t.registration.wilaya}</Label>
                         <select
                           id="wilaya"
-                          {...register('wilaya', { required: 'Please select your wilaya' })}
+                          {...register('wilaya', { required: t.registration.wilayaError })}
                           className="w-full mt-2 h-11 sm:h-12 px-3 sm:px-4 text-base sm:text-lg border-2 border-black/10 rounded-xl focus:outline-none focus:ring-4 focus:ring-black/10 focus:border-black transition-all"
                         >
-                          <option value="">Select your wilaya</option>
+                          <option value="">{t.registration.wilayaPlaceholder}</option>
                           {ALGERIAN_WILAYAS.map((wilaya) => (
                             <option key={wilaya} value={wilaya}>
                               {wilaya}
@@ -365,9 +390,9 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       </div>
 
                       <div>
-                        <Label className="text-sm sm:text-base">What's your current status? *</Label>
+                        <Label className="text-sm sm:text-base">{t.registration.status}</Label>
                         <div className="grid grid-cols-2 gap-2 sm:gap-3 mt-3">
-                          {statusOptions.map((status) => (
+                          {t.registration.statusOptions.map((status) => (
                             <label
                               key={status}
                               className={`border-2 rounded-xl p-3 sm:p-4 cursor-pointer transition-all hover:border-black/30 ${
@@ -378,7 +403,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                             >
                               <input
                                 type="radio"
-                                {...register('status', { required: 'Please select your status' })}
+                                {...register('status', { required: t.registration.statusError })}
                                 value={status}
                                 className="sr-only"
                               />
@@ -398,15 +423,15 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                 {currentStep === 2 && (
                   <div className="space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
                     <div>
-                      <h1 className="mb-2 text-2xl sm:text-3xl">Choose your path</h1>
-                      <p className="text-muted-foreground text-sm sm:text-base">Help us understand your interests and goals</p>
+                      <h1 className="mb-2 text-2xl sm:text-3xl">{t.registration.step2Title}</h1>
+                      <p className="text-muted-foreground text-sm sm:text-base">{t.registration.step2Subtitle}</p>
                     </div>
 
                     <div className="space-y-5 sm:space-y-6">
                       <div>
-                        <Label className="text-sm sm:text-base">Which pathway fits you best? *</Label>
+                        <Label className="text-sm sm:text-base">{t.registration.pathway}</Label>
                         <div className="grid gap-2 sm:gap-3 mt-3">
-                          {pathwayOptions.map((pathway) => (
+                          {pathwayOptions.map((pathway, index) => (
                             <label
                               key={pathway.value}
                               className={`border-2 rounded-xl p-4 sm:p-5 cursor-pointer transition-all hover:border-black/30 ${
@@ -417,15 +442,15 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                             >
                               <input
                                 type="radio"
-                                {...register('pathway', { required: 'Please select a pathway' })}
+                                {...register('pathway', { required: t.registration.pathwayError })}
                                 value={pathway.value}
                                 className="sr-only"
                               />
                               <div className="flex items-start gap-2 sm:gap-3">
                                 <span className="text-xl sm:text-2xl">{pathway.emoji}</span>
                                 <div>
-                                  <div className="font-medium mb-1 text-sm sm:text-base">{pathway.label}</div>
-                                  <div className="text-xs sm:text-sm text-muted-foreground">{pathway.description}</div>
+                                  <div className="font-medium mb-1 text-sm sm:text-base">{t.registration.pathwayOptions[index].label}</div>
+                                  <div className="text-xs sm:text-sm text-muted-foreground">{t.registration.pathwayOptions[index].description}</div>
                                 </div>
                               </div>
                             </label>
@@ -437,7 +462,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       </div>
 
                       <div>
-                        <Label className="text-sm sm:text-base">What interests you? *</Label>
+                        <Label className="text-sm sm:text-base">{t.registration.interests}</Label>
                         <div className="flex flex-wrap gap-2 mt-3">
                           {interestOptions.map((interest) => (
                             <button
@@ -460,7 +485,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       </div>
 
                       <div>
-                        <Label className="text-sm sm:text-base">Which sessions would you like to attend? *</Label>
+                        <Label className="text-sm sm:text-base">{t.registration.sessions}</Label>
                         <div className="space-y-2 mt-3">
                           {sessionOptions.map((session) => (
                             <label
@@ -487,54 +512,54 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                 {currentStep === 3 && (
                   <div className="space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
                     <div>
-                      <h1 className="mb-2 text-2xl sm:text-3xl">Almost there!</h1>
-                      <p className="text-muted-foreground text-sm sm:text-base">Just a few more details</p>
+                      <h1 className="mb-2 text-2xl sm:text-3xl">{t.registration.step3Title}</h1>
+                      <p className="text-muted-foreground text-sm sm:text-base">{t.registration.step3Subtitle}</p>
                     </div>
 
                     <div className="space-y-5 sm:space-y-6">
                       <div>
                         <Label htmlFor="affiliation" className="text-sm sm:text-base">
-                          Club or organization affiliation
+                          {t.registration.affiliation}
                         </Label>
                         <Input
                           id="affiliation"
                           {...register('affiliation')}
-                          placeholder="e.g., Google Developer Group"
+                          placeholder={t.registration.affiliationPlaceholder}
                           className="mt-2 h-11 sm:h-12 text-base sm:text-lg"
                         />
-                        <p className="text-xs text-muted-foreground mt-2">Optional</p>
+                        <p className="text-xs text-muted-foreground mt-2">{t.registration.optional}</p>
                       </div>
 
                       <div>
                         <Label htmlFor="portfolioLink" className="text-sm sm:text-base">
-                          LinkedIn or Portfolio link
+                          {t.registration.portfolio}
                         </Label>
                         <Input
                           id="portfolioLink"
                           {...register('portfolioLink', {
                             pattern: {
                               value: /^https?:\/\/.+/i,
-                              message: 'Please enter a valid URL starting with http:// or https://',
+                              message: t.registration.portfolioError,
                             },
                           })}
-                          placeholder="https://linkedin.com/in/yourprofile"
+                          placeholder={t.registration.portfolioPlaceholder}
                           className="mt-2 h-11 sm:h-12 text-base sm:text-lg"
                         />
-                        <p className="text-xs text-muted-foreground mt-2">Optional</p>
+                        <p className="text-xs text-muted-foreground mt-2">{t.registration.optional}</p>
                         {errors.portfolioLink && (
                           <p className="text-xs sm:text-sm text-[#FF5722] mt-2">{errors.portfolioLink.message}</p>
                         )}
                       </div>
 
                       <div>
-                        <Label htmlFor="hearAbout" className="text-sm sm:text-base">How did you hear about this event? *</Label>
+                        <Label htmlFor="hearAbout" className="text-sm sm:text-base">{t.registration.hearAbout}</Label>
                         <select
                           id="hearAbout"
-                          {...register('hearAbout', { required: 'Please tell us how you found out about this event' })}
+                          {...register('hearAbout', { required: t.registration.hearAboutError })}
                           className="w-full mt-2 h-11 sm:h-12 px-3 sm:px-4 text-base sm:text-lg border-2 border-black/10 rounded-xl focus:outline-none focus:ring-4 focus:ring-black/10 focus:border-black transition-all"
                         >
-                          <option value="">Select an option</option>
-                          {hearAboutOptions.map((option) => (
+                          <option value="">{t.registration.hearAboutPlaceholder}</option>
+                          {t.registration.hearAboutOptions.map((option) => (
                             <option key={option} value={option}>
                               {option}
                             </option>
@@ -547,7 +572,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
 
                       <div className="bg-[#F5F3F0] rounded-xl p-4 sm:p-5 mt-6 sm:mt-8">
                         <p className="text-xs sm:text-sm text-muted-foreground">
-                          By submitting this form, you agree to receive event updates and communications from ACS regarding the Sahra Tech event.
+                          {t.registration.consent}
                         </p>
                       </div>
                     </div>
@@ -562,8 +587,8 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       onClick={prevStep}
                       className="px-4 sm:px-6 py-2.5 sm:py-3 border-2 border-black/10 rounded-xl hover:border-black/30 transition-all flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base"
                     >
-                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span className="font-medium">Back</span>
+                      {isRTL ? <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />}
+                      <span className="font-medium">{t.registration.back}</span>
                     </button>
                   ) : (
                     <div />
@@ -573,27 +598,29 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                     <button
                       type="button"
                       onClick={nextStep}
-                      className="px-4 sm:px-6 py-2.5 sm:py-3 bg-black text-white rounded-xl hover:bg-black/90 transition-all flex items-center gap-1.5 sm:gap-2 ml-auto text-sm sm:text-base"
+                      className="px-4 sm:px-6 py-2.5 sm:py-3 bg-black text-white rounded-xl hover:bg-black/90 transition-all flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base"
                     >
-                      <span className="font-medium">Continue</span>
-                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="font-medium">{t.registration.continue}</span>
+                      {isRTL ? <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" /> : <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />}
                     </button>
                   ) : (
-                      <div className="ml-auto flex flex-col items-end gap-2">
+                      <div className="flex flex-col items-end gap-2">
                         <button
                           type="submit"
                           disabled={isSubmitting}
                           className="px-5 sm:px-8 py-2.5 sm:py-3 bg-[#FF5722] text-white rounded-xl hover:bg-[#E64A19] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base"
                         >
                           <span className="font-medium">
-                            {isSubmitting ? 'Submitting...' : 'Complete Registration'}
+                            {isSubmitting ? t.registration.submitting : t.registration.completeRegistration}
                           </span>
                           {!isSubmitting && <Check className="w-4 h-4 sm:w-5 sm:h-5" />}
                         </button>
-                        {submitError && <p className="text-xs sm:text-sm text-[#FF5722]">{submitError}</p>}
                       </div>
                   )}
                 </div>
+                {submitError && (
+                  <p className="text-xs sm:text-sm text-[#FF5722] text-end mt-2">{submitError}</p>
+                )}
               </form>
             )}
           </div>

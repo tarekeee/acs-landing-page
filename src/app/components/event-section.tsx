@@ -10,63 +10,18 @@ import {
   CalendarMinimalisticBoldDuotone
 } from "solar-icon-set";
 import { Coffee } from "lucide-react";
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface EventSectionProps {
   onRegisterClick: () => void;
 }
 
 export function EventSection({ onRegisterClick }: EventSectionProps) {
-  const highlights = [
-    {
-      icon: LightbulbBoltBoldDuotone,
-      title: 'Technical Workshops',
-      description: 'Hands-on sessions in AI, Cybersecurity, Robotics, and Enterpreneurship'
-    },
-    {
-      icon: CPUBoltBoldDuotone,
-      title: 'Live Demos',
-      description: 'Experience cutting-edge AI and robotics demonstrations'
-    },
-    {
-      icon: MoonBoldDuotone,
-      title: 'Iftar Together',
-      description: 'Break fast with us and enjoy a delicious Iftar dinner in a welcoming atmosphere'
-    },
-    {
-      icon: UsersGroupTwoRoundedBoldDuotone,
-      title: 'Speed Networking',
-      description: 'Connect with students, professionals, and entrepreneurs'
-    }
-  ];
+  const { t } = useLanguage();
 
-const schedule = [
-    {
-      time: '14:00 - 15:30',
-      activity: 'Check-in: Participant registration, booth setups, and early networking.',
-      type: 'check-in'
-    },
-    {
-      time: '16:00 - 18:30',
-      activity: 'Workshops: Cybersec & AI sessions, interactive Robotics showcase, and startup networking.',
-      type: 'workshops'
-    },
-    {
-      time: '18:45 - 20:00',
-      activity: 'Ftoor: Communal dinner with tech innovators and startup founders.',
-      type: 'ftoor'
-    },
-    {
-      time: '20:00 - 22:00',
-      activity: 'Talks & Panels: High-level panels with industry leaders and ecosystem decision-makers.',
-      type: 'panels/talks'
-    },
-   
-    {
-      time: '22:00 - 23:30',
-      activity: 'Networking: Late-night opportunities lounge and closing vibes.',
-      type: 'networking'
-    }
-];
+  const highlightIcons = [LightbulbBoltBoldDuotone, CPUBoltBoldDuotone, MoonBoldDuotone, UsersGroupTwoRoundedBoldDuotone];
+
+const schedule = t.event.schedule;
 
 
   return (
@@ -79,29 +34,29 @@ const schedule = [
         <div className="text-center mb-16 sm:mb-24">
           <div className="inline-flex items-center gap-2 bg-[#FF5722]/10 text-[#FF5722] px-4 py-2 rounded-full mb-6 text-sm font-semibold tracking-wide uppercase border border-[#FF5722]/20">
             <CalendarMinimalisticBoldDuotone className="w-5 h-5" />
-            <span>Upcoming Event</span>
+            <span>{t.event.badge}</span>
           </div>
           {/* <h2 className="text-5xl md:text-6xl lg:text-7xl mb-6 tracking-tighter text-black font-['Space_Grotesk'] leading-none">
             ACS Tech Night 2026
           </h2> */}
           <img src="/logos/sahra-tech.svg" alt="Sahra Tech" className="mx-auto mb-6 w-[250px] sm:w-[350px] lg:w-[400px]" />
           <p className="text-gray-600 max-w-2xl mx-auto mb-10 text-lg sm:text-xl leading-relaxed">
-            Join us for an extraordinary evening where technology meets community. One night, one Youth House Abderehman Lalaa transformed into a vibrant tech hub.
+            {t.event.description}
           </p>
           
           {/* Event Details */}
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-8 mb-10">
             <div className="flex items-center justify-center gap-3 bg-white px-6 py-3 rounded-2xl shadow-sm border border-black/5">
               <CalendarDateBoldDuotone className="w-6 h-6 text-[#FF5722]" />
-              <span className="font-semibold">March 12th, 2026</span>
+              <span className="font-semibold">{t.event.date}</span>
             </div>
             <div className="flex items-center justify-center gap-3 bg-white px-6 py-3 rounded-2xl shadow-sm border border-black/5">
               <ClockCircleBoldDuotone className="w-6 h-6 text-[#FF5722]" />
-              <span className="font-semibold">3:00 PM - 11:00 PM</span>
+              <span className="font-semibold">{t.event.time}</span>
             </div>
             <div className="flex items-center justify-center gap-3 bg-white px-6 py-3 rounded-2xl shadow-sm border border-black/5">
               <MapPointBoldDuotone className="w-6 h-6 text-[#FF5722]" />
-              <span className="font-semibold">Youth House Abderehman Lalaa, Algiers</span>
+              <span className="font-semibold">{t.event.location}</span>
             </div>
           </div>
 
@@ -109,15 +64,15 @@ const schedule = [
             onClick={onRegisterClick}
             className="group bg-[#FF5722] text-white px-10 py-5 rounded-full hover:bg-[#E64A19] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_-10px_rgba(255,87,34,0.6)] inline-flex items-center gap-3 text-lg font-bold"
           >
-            <span>Secure Your Spot</span>
+            <span>{t.event.secureSpot}</span>
             <TicketSaleBoldDuotone className="w-6 h-6 group-hover:rotate-12 transition-transform" />
           </button>
         </div>
 
         {/* Highlights Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          {highlights.map((highlight, index) => {
-            const Icon = highlight.icon;
+          {t.event.highlights.map((highlight, index) => {
+            const Icon = highlightIcons[index];
             return (
               <div
                 key={index}
@@ -139,8 +94,8 @@ const schedule = [
         {/* Fancy Schedule Layout */}
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h3 className="text-4xl md:text-5xl font-['Space_Grotesk'] tracking-tighter mb-4">Agenda</h3>
-            <p className="text-gray-500 flex justify-center items-center gap-[8px]">What to expect on <img src="/logos/sahra-tech.svg" alt="Sahra Tech" className="inline-block w-10 h-10 mb-[12px]" /></p>
+            <h3 className="text-4xl md:text-5xl tracking-tighter mb-4">{t.event.agenda}</h3>
+            <p className="text-gray-500 flex justify-center items-center gap-[8px]">{t.event.agendaSubtitle} <img src="/logos/sahra-tech.svg" alt="Sahra Tech" className="inline-block w-10 h-10 mb-[12px]" /></p>
           </div>
           
           <div className="bg-white rounded-[2.5rem] p-6 sm:p-12 shadow-xl border border-black/5 relative overflow-hidden">
@@ -182,8 +137,8 @@ const schedule = [
           <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#FF5722]/10 via-[#FF5722]/5 to-[#FF5722]/10 border border-[#FF5722]/20 rounded-full px-8 py-4 shadow-sm">
             <span className="text-2xl">🌙</span>
             <p className="text-gray-700 font-medium">
-              <span className="text-[#FF5722] font-bold mr-2">Special Note:</span> 
-              Event coincides with Ramadan — Iftar dinner will be served
+              <span className="text-[#FF5722] font-bold ltr:mr-2 rtl:ml-2">{t.event.specialNote}</span> 
+              {t.event.specialNoteText}
             </p>
             <span className="text-2xl">🌙</span>
           </div>

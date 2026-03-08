@@ -1,6 +1,8 @@
 import svgPaths from "./svg-3dhcnc4k9i";
 import IsometricFlow from "./IsometricFlow";
 import { EventCountdown } from "@/app/components/event-countdown";
+import { useLanguage } from "@/app/i18n/LanguageContext";
+import { LanguageSwitcher } from "@/app/components/language-switcher";
 
 type HeroProps = {
   onJoinClick?: () => void;
@@ -64,17 +66,19 @@ function AdvancedComputingSociety() {
 }
 
 function NavbarLinks() {
+  const { t } = useLanguage();
   return (
     <div className="content-stretch flex font-['Space_Grotesk',sans-serif] font-semibold gap-[32px] items-center leading-none not-italic relative shrink-0 text-[14px] text-[rgba(0,0,0,0.9)] whitespace-nowrap" data-name="Navbar Links">
-      <button type="button" className="relative shrink-0 cursor-pointer hover:text-[#FF5722] transition-colors" onClick={() => navigateToSection('about')}>About</button>
-      <button type="button" className="relative shrink-0 cursor-pointer hover:text-[#FF5722] transition-colors" onClick={() => navigateToSection('how-we-grow')}>How We Grow</button>
-      <button type="button" className="relative shrink-0 cursor-pointer hover:text-[#FF5722] transition-colors" onClick={() => navigateToSection('events')}>Events</button>
-      <button type="button" className="relative shrink-0 cursor-pointer hover:text-[#FF5722] transition-colors" onClick={() => navigateToSection('contact')}>Contact</button>
+      <button type="button" className="relative shrink-0 cursor-pointer hover:text-[#FF5722] transition-colors" onClick={() => navigateToSection('about')}>{t.nav.about}</button>
+      <button type="button" className="relative shrink-0 cursor-pointer hover:text-[#FF5722] transition-colors" onClick={() => navigateToSection('how-we-grow')}>{t.nav.howWeGrow}</button>
+      <button type="button" className="relative shrink-0 cursor-pointer hover:text-[#FF5722] transition-colors" onClick={() => navigateToSection('events')}>{t.nav.events}</button>
+      <button type="button" className="relative shrink-0 cursor-pointer hover:text-[#FF5722] transition-colors" onClick={() => navigateToSection('contact')}>{t.nav.contact}</button>
     </div>
   );
 }
 
 function SignUpButton({ onJoinClick }: HeroProps) {
+  const { t } = useLanguage();
   return (
     <button
       type="button"
@@ -82,14 +86,14 @@ function SignUpButton({ onJoinClick }: HeroProps) {
       data-name="Sign-up Button"
       onClick={() => navigateToSection('join', onJoinClick)}
     >
-      <p className="font-['Space_Grotesk',sans-serif] font-semibold leading-none not-italic relative shrink-0 text-[14px] text-white whitespace-nowrap">Join Us</p>
+      <p className="font-['Space_Grotesk',sans-serif] font-semibold leading-none not-italic relative shrink-0 text-[14px] text-white whitespace-nowrap">{t.nav.joinUs}</p>
     </button>
   );
 }
 
 function Navbar({ onJoinClick }: HeroProps) {
   return (
-    <div className="-translate-x-1/2 absolute backdrop-blur-[14px] content-stretch flex h-[54px] items-center justify-between left-1/2 pl-[16px] pr-[8px] py-[8px] rounded-[56px] top-[39px] w-[1170px]" data-name="Navbar">
+    <div dir="ltr" className="-translate-x-1/2 absolute backdrop-blur-[14px] content-stretch flex h-[54px] items-center justify-between left-1/2 pl-[16px] pr-[8px] py-[8px] rounded-[56px] top-[39px] w-[1170px]" data-name="Navbar">
       <div aria-hidden="true" className="absolute border-[0.5px] border-[rgba(130,130,130,0.2)] border-solid inset-0 pointer-events-none rounded-[56px]" />
       <div className="h-[32.505px] relative shrink-0 w-[159.995px]" data-name="Horizental">
         <div className="absolute h-[32.505px] left-0 right-[79.68%] top-0">
@@ -274,7 +278,10 @@ function Navbar({ onJoinClick }: HeroProps) {
         <AdvancedComputingSociety />
       </div>
       <NavbarLinks />
-      <SignUpButton onJoinClick={onJoinClick} />
+      <div className="flex items-center gap-2 shrink-0">
+        <LanguageSwitcher />
+        <SignUpButton onJoinClick={onJoinClick} />
+      </div>
     </div>
   );
 }
@@ -1963,12 +1970,13 @@ function ButtonCta() {
 }
 
 function HeroContent() {
+  const { t } = useLanguage();
   return (
     <div className="-translate-x-1/2 -translate-y-1/2 absolute content-stretch flex flex-col gap-[32px] items-center justify-center left-1/2 top-[calc(50%-60.65px)]" data-name="Hero Content">
       <p className="bg-clip-text font-['Space_Grotesk:Regular',sans-serif] font-normal leading-none relative shrink-0 text-[88px] text-[transparent] text-center tracking-[-5.28px] w-[552.401px]" style={{ backgroundImage: "linear-gradient(188.082deg, rgb(0, 0, 0) 27.813%, rgb(201, 201, 201) 84.586%)" }}>
-        The Next Gen Of Youth
+        {t.hero.title}
       </p>
-      <p className="font-['Space_Grotesk',sans-serif] font-medium leading-[1.5] min-w-full not-italic relative shrink-0 text-[20px] text-[rgba(4,4,4,0.95)] text-center w-[min-content]">We help young minds to learn, build, and lead with purpose.</p>
+      <p className="font-['Space_Grotesk',sans-serif] font-medium leading-[1.5] min-w-full not-italic relative shrink-0 text-[20px] text-[rgba(4,4,4,0.95)] text-center w-[min-content]">{t.hero.subtitle}</p>
       <ButtonCta />
     </div>
   );

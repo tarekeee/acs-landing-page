@@ -1,11 +1,14 @@
 import HeroImport from "../../imports/Hero3-12-554";
 import { EventCountdown } from './event-countdown';
+import { useLanguage } from '../i18n/LanguageContext';
+import { LanguageSwitcher } from './language-switcher';
 
 interface HeroSectionProps {
   onJoinClick: () => void;
 }
 
 export function HeroSection({ onJoinClick }: HeroSectionProps) {
+  const { t, isRTL } = useLanguage();
   const handleJoinClick = () => {
     onJoinClick();
   };
@@ -28,11 +31,11 @@ export function HeroSection({ onJoinClick }: HeroSectionProps) {
         */}
         <div className="lg:hidden absolute inset-0 flex flex-col items-center justify-start px-6 text-center z-[50] pt-[120px] pointer-events-none">
           <div className="pointer-events-auto flex flex-col items-center max-w-[450px]">
-            <h1 className="font-['Space_Grotesk',sans-serif] text-4xl sm:text-5xl md:text-6xl font-normal leading-[1.1] tracking-[-2px] mb-6 text-black">
-              The Next Gen Of Youth
+            <h1 className={`${isRTL ? "font-['Cairo',sans-serif]" : "font-['Space_Grotesk',sans-serif]"} text-4xl sm:text-5xl md:text-6xl font-normal leading-[1.1] tracking-[-2px] mb-6 text-black`}>
+              {t.hero.title}
             </h1>
-            <p className="font-['Space_Grotesk',sans-serif] text-[17px] md:text-[19px] font-medium text-black/80 leading-relaxed mb-8 px-2">
-              We help young minds to learn, build, and lead with purpose.
+            <p className={`${isRTL ? "font-['Cairo',sans-serif]" : "font-['Space_Grotesk',sans-serif]"} text-[17px] md:text-[19px] font-medium text-black/80 leading-relaxed mb-8 px-2`}>
+              {t.hero.subtitle}
             </p>
             <EventCountdown isMobile={true} />
           </div>
@@ -40,21 +43,21 @@ export function HeroSection({ onJoinClick }: HeroSectionProps) {
 
         {/* Mobile floating bottom navbar */}
         <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-[620px] z-[90] pointer-events-none">
-          <div className="pointer-events-auto backdrop-blur-[14px] content-stretch flex h-[56px] items-center justify-between pl-[12px] pr-[8px] py-[8px] rounded-[56px] relative gap-3">
+          <div dir="ltr" className="pointer-events-auto backdrop-blur-[14px] content-stretch flex h-[56px] items-center justify-between pl-[12px] pr-[8px] py-[8px] rounded-[56px] relative gap-3">
             <div aria-hidden="true" className="absolute border-[0.5px] border-[rgba(130,130,130,0.2)] border-solid inset-0 pointer-events-none rounded-[56px]" />
             <img src="/logos/acs.png" alt="ACS" className="h-8 w-auto shrink-0 relative z-[1]" />
-            <div className="relative z-[1] flex-1 min-w-0 flex items-center gap-1.5 sm:gap-3 text-[12px] max-[600px]:text-[9px] font-['Space_Grotesk',sans-serif] font-semibold leading-none text-[rgba(0,0,0,0.9)] whitespace-nowrap overflow-x-auto no-scrollbar">
-              <button type="button" onClick={() => scrollToSection('about')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">About</button>
-              <button type="button" onClick={() => scrollToSection('how-we-grow')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">How We Grow</button>
-              <button type="button" onClick={() => scrollToSection('events')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">Events</button>
-              <button type="button" onClick={() => scrollToSection('contact')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">Contact</button>
+            <div className={`relative z-[1] flex-1 min-w-0 flex items-center gap-1.5 sm:gap-3 text-[12px] max-[600px]:text-[9px] ${isRTL ? "font-['Cairo',sans-serif]" : "font-['Space_Grotesk',sans-serif]"} font-semibold leading-none text-[rgba(0,0,0,0.9)] whitespace-nowrap overflow-x-auto overflow-y-hidden no-scrollbar`}>
+              <button type="button" onClick={() => scrollToSection('about')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">{t.nav.about}</button>
+              <button type="button" onClick={() => scrollToSection('how-we-grow')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">{t.nav.howWeGrow}</button>
+              <button type="button" onClick={() => scrollToSection('events')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">{t.nav.events}</button>
+              <button type="button" onClick={() => scrollToSection('contact')} className="hover:text-[#FF5722] transition-colors max-[600px]:text-[10px]">{t.nav.contact}</button>
             </div>
             <button
               type="button"
               onClick={handleJoinClick}
-              className="relative z-[1] shrink-0 h-[40px] px-4 rounded-[999px] bg-[#FF5722] text-white text-[12px] font-['Space_Grotesk',sans-serif] font-semibold leading-none hover:bg-[#E64A19] transition-colors"
+              className={`relative z-[1] shrink-0 h-[40px] px-4 rounded-[999px] bg-[#FF5722] text-white text-[12px] ${isRTL ? "font-['Cairo',sans-serif]" : "font-['Space_Grotesk',sans-serif]"} font-semibold leading-none hover:bg-[#E64A19] transition-colors`}
             >
-              Join Us
+              {t.nav.joinUs}
             </button>
           </div>
         </div>
@@ -94,7 +97,7 @@ export function HeroSection({ onJoinClick }: HeroSectionProps) {
             width: calc(100% - 2rem) !important;
             top: 20px !important;
             height: 60px !important;
-            justify-content: flex-start !important;
+            justify-content: space-between !important;
           }
           
           [data-name="Navbar Links"],[data-name="Sign-up Button"] {

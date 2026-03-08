@@ -1,5 +1,7 @@
 import { ArrowLeft } from 'lucide-react';
 import type { AchievementPost } from '../content/achievement-posts';
+import { useLanguage } from '../i18n/LanguageContext';
+import { LanguageSwitcher } from './language-switcher';
 
 type AchievementBlogPageProps = {
   post: AchievementPost;
@@ -7,32 +9,36 @@ type AchievementBlogPageProps = {
 };
 
 export function AchievementBlogPage({ post, onBackHome }: AchievementBlogPageProps) {
+  const { t } = useLanguage();
   return (
     <main className="min-h-screen bg-white">
       <section className="bg-[#F5F3F0] py-14 md:py-16 border-b border-black/5">
         <div className="max-w-7xl mx-auto px-6">
-          <button
-            type="button"
-            onClick={onBackHome}
-            className="inline-flex items-center gap-2 text-sm tracking-wide text-gray-600 hover:text-[#FF5722] transition-colors mb-10"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            BACK TO HOME
-          </button>
+          <div className="flex items-center justify-between mb-10">
+            <button
+              type="button"
+              onClick={onBackHome}
+              className="inline-flex items-center gap-2 text-sm tracking-wide text-gray-600 hover:text-[#FF5722] transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              {t.achievementBlog.backToHome}
+            </button>
+            <LanguageSwitcher />
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-end">
             <div className="lg:col-span-7">
               <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">
-                {post.section === 'success-stories' ? 'SUCCESS STORY' : 'MEMBER ACHIEVEMENT'}
+                {post.section === 'success-stories' ? t.achievementBlog.successStory : t.achievementBlog.memberAchievement}
               </div>
               <h1 className="text-5xl md:text-6xl lg:text-7xl leading-none tracking-tighter mb-4">{post.title}</h1>
               <p className="text-sm md:text-base tracking-wide text-gray-600">{post.subtitle}</p>
             </div>
 
             <div className="lg:col-span-5 lg:text-right">
-              <div className="text-sm tracking-wide text-gray-500 font-medium mb-2">PUBLISHED</div>
+              <div className="text-sm tracking-wide text-gray-500 font-medium mb-2">{t.achievementBlog.published}</div>
               <p className="text-lg text-gray-700 mb-1">{post.publishDate}</p>
-              <p className="text-sm text-gray-600">By {post.author}</p>
+              <p className="text-sm text-gray-600">{t.achievementBlog.by} {post.author}</p>
             </div>
           </div>
         </div>

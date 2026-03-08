@@ -1,6 +1,8 @@
 import { MapPin, Navigation } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export function VisitSection() {
+  const { t } = useLanguage();
   const address = "92 Bd Des Martyrs, El Madania, Algiers";
   const encodedAddress = encodeURIComponent(address);
   const mapLink = `https://maps.google.com/?q=${encodedAddress}`;
@@ -12,14 +14,14 @@ export function VisitSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column - Info */}
           <div>
-            <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">LOCATION</div>
+            <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">{t.visit.locationLabel}</div>
             <h2 className="text-5xl md:text-6xl leading-none tracking-tighter mb-6">
-              VISIT
+              {t.visit.title1}
               <br />
-              US
+              {t.visit.title2}
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              We're based at Abderrahmane Laala Youth House — come say hello.
+              {t.visit.description}
             </p>
 
             {/* Address Block */}
@@ -30,11 +32,11 @@ export function VisitSection() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Abderrahmane Laala Youth House
+                    {t.visit.youthHouse}
                   </h3>
-                  <p className="text-sm text-gray-500 font-medium mb-2">Tech Hub</p>
+                  <p className="text-sm text-gray-500 font-medium mb-2">{t.visit.techHub}</p>
                   <p className="text-gray-600">
-                    {address}
+                    {t.visit.address}
                   </p>
                 </div>
               </div>
@@ -48,7 +50,7 @@ export function VisitSection() {
               className="inline-flex items-center gap-2 bg-[#FF5722] text-white px-8 py-4 rounded-full text-sm tracking-wide hover:bg-[#FF6B3D] hover:shadow-lg hover:scale-105 transition-all duration-300 group"
             >
               <Navigation className="w-4 h-4 group-hover:rotate-45 transition-transform duration-300" />
-              GET DIRECTIONS
+              {t.visit.getDirections}
             </a>
           </div>
 

@@ -1,18 +1,12 @@
 import { ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface JoinCTASectionProps {
   onJoinClick: () => void;
 }
 
 export function JoinCTASection({ onJoinClick }: JoinCTASectionProps) {
-  const benefits = [
-    'Access to exclusive workshops and events',
-    'Networking opportunities with industry professionals',
-    'Hands-on project experience',
-    'Resume-building activities',
-    'Mentorship from senior members',
-    'Free resources and learning materials'
-  ];
+  const { t } = useLanguage();
 
   return (
     <section id="join" className="min-h-screen bg-[#F5F3F0] py-16">
@@ -20,19 +14,19 @@ export function JoinCTASection({ onJoinClick }: JoinCTASectionProps) {
         {/* Benefits Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
           <div>
-            <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">JOIN THE MOVEMENT</div>
+            <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">{t.joinCta.joinMovement}</div>
             <h2 className="text-5xl md:text-6xl leading-none tracking-tighter mb-6">
-              READY TO
+              {t.joinCta.title1}
               <br />
-              JOIN?
+              {t.joinCta.title2}
             </h2>
             <p className="text-lg text-gray-600">
-              Become part of a thriving community of youth who build, learn, and grow together. Take your skills to the next level.
+              {t.joinCta.description}
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-4">
-            {benefits.map((benefit, index) => (
+            {t.joinCta.benefits.map((benefit, index) => (
               <div 
                 key={index}
                 className="flex items-start gap-3 bg-white p-4 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
@@ -54,21 +48,21 @@ export function JoinCTASection({ onJoinClick }: JoinCTASectionProps) {
         <div className="bg-[#1A1A1A] text-white p-10 md:p-14 rounded-3xl relative overflow-hidden group hover:shadow-2xl transition-shadow duration-500">
           <div className="relative z-10 max-w-2xl">
             <h3 className="text-4xl md:text-5xl mb-6 leading-none tracking-tighter">
-              BECOME PART OF
+              {t.joinCta.becomePartOf}
               <br />
-              THE COMMUNITY
+              {t.joinCta.theCommunity}
             </h3>
             <p className="text-lg text-white/80 mb-8">
-              Join a thriving community of innovators, developers, and future tech leaders dedicated to shaping the future.
+              {t.joinCta.ctaDescription}
             </p>
             
             {/* Note */}
             <div className="bg-white/10 border-2 border-white/20 backdrop-blur-sm rounded-2xl p-6 mb-8">
               <p className="text-white font-medium mb-2">
-                💡 Membership is free for all youth. No experience required!
+                💡 {t.joinCta.membershipFree}
               </p>
               <p className="text-white/70 text-sm">
-                Whether you're a beginner or an expert, there's a place for you in our community.
+                {t.joinCta.membershipNote}
               </p>
             </div>
 
@@ -77,7 +71,7 @@ export function JoinCTASection({ onJoinClick }: JoinCTASectionProps) {
               onClick={onJoinClick}
               className="bg-[#FF5722] text-white px-8 py-4 rounded-full text-sm tracking-wide hover:bg-[#FF6B3D] hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-2 group/btn"
             >
-              JOIN ACS TODAY
+              {t.joinCta.joinToday}
               <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-300" />
             </button>
           </div>

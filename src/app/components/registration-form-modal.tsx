@@ -62,7 +62,9 @@ export function RegistrationFormModal({ isOpen, onClose }: RegistrationFormModal
     'Web Security Essentials',
     'Reversing Mobile applications for fun and profits',
     'Forensic Memory Analysis: Uncovering Digital Footprints in RAM',
-    'Robotics Demo & Hands-on',
+    'Gaming Demo & Hands-on',
+    'Robotics Foundations Workshop',
+    'Robotics & Intelligent Systems Workshop',
     'Community Building Strategies',
     'Panel Discussions',
     'Speed Networking Session'

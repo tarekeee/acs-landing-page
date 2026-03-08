@@ -1,53 +1,30 @@
 import { Calendar, Users, Trophy, Rocket, BookOpen } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export function ImpactSection() {
-  const stats = [
-    {
-      icon: Calendar,
-      value: '2+',
-      label: 'Seasons Active',
-    },
-    {
-      icon: Users,
-      value: '1,000+',
-      label: 'Youth Reached',
-    },
-    {
-      icon: Trophy,
-      value: '3+',
-      label: 'Competition Wins',
-    },
-    {
-      icon: Rocket,
-      value: '2+',
-      label: 'Major Events Organized',
-    },
-    {
-      icon: BookOpen,
-      value: '10+',
-      label: 'Workshops Delivered',
-    },
-  ];
+  const { t } = useLanguage();
+
+  const statIcons = [Calendar, Users, Trophy, Rocket, BookOpen];
 
   return (
     <section id="impact" className="min-h-screen bg-[#F5F3F0] py-16">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
-          <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">MAKING A DIFFERENCE</div>
+          <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">{t.impact.makingDifference}</div>
           <h2 className="text-5xl md:text-6xl mb-6 leading-none tracking-tighter">
-            OUR
+            {t.impact.title1}
             <br />
-            IMPACT
+            {t.impact.title2}
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Numbers that tell the story of our journey and the lives we've touched.
+            {t.impact.description}
           </p>
         </div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
+          {t.impact.stats.map((stat, index) => {
+            const Icon = statIcons[index];
             return (
               <div
                 key={index}
@@ -71,10 +48,10 @@ export function ImpactSection() {
         <div className="bg-gradient-to-br from-[#FF5722] to-[#FF8A65] rounded-3xl p-10 text-white text-center hover:shadow-2xl transition-shadow duration-500">
           <div className="max-w-3xl mx-auto">
             <p className="text-2xl md:text-3xl font-light mb-4 leading-none">
-              "From a small community to a recognized force in Algeria's tech scene"
+              {t.impact.quote}
             </p>
             <p className="text-sm opacity-90 tracking-wide">
-              — Our journey continues to inspire youth across the nation
+              {t.impact.quoteSrc}
             </p>
           </div>
         </div>

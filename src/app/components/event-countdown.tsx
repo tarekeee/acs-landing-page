@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CalendarDateBoldDuotone } from 'solar-icon-set';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface TimeLeft {
   days: number;
@@ -9,6 +10,7 @@ interface TimeLeft {
 }
 
 export function EventCountdown({ isMobile = false }: { isMobile?: boolean }) {
+  const { t } = useLanguage();
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isMounted, setIsMounted] = useState(false);
 
@@ -54,22 +56,22 @@ export function EventCountdown({ isMobile = false }: { isMobile?: boolean }) {
         <div className="flex items-center gap-3">
           <div className="flex flex-col items-center">
             <span className="text-xl leading-none font-['Space_Grotesk'] text-[#FF5722]">{String(timeLeft.days).padStart(2, '0')}</span>
-            <span className="text-[10px] text-gray-500 font-medium tracking-wider">DAYS</span>
+            <span className="text-[10px] text-gray-500 font-medium tracking-wider">{t.countdown.days}</span>
           </div>
           <span className="text-gray-300 font-light text-xl -mt-3">:</span>
           <div className="flex flex-col items-center">
             <span className="text-xl leading-none font-['Space_Grotesk']">{String(timeLeft.hours).padStart(2, '0')}</span>
-            <span className="text-[10px] text-gray-500 font-medium tracking-wider">HRS</span>
+            <span className="text-[10px] text-gray-500 font-medium tracking-wider">{t.countdown.hrs}</span>
           </div>
           <span className="text-gray-300 font-light text-xl -mt-3">:</span>
           <div className="flex flex-col items-center">
             <span className="text-xl leading-none font-['Space_Grotesk']">{String(timeLeft.minutes).padStart(2, '0')}</span>
-            <span className="text-[10px] text-gray-500 font-medium tracking-wider">MIN</span>
+            <span className="text-[10px] text-gray-500 font-medium tracking-wider">{t.countdown.min}</span>
           </div>
           <span className="text-gray-300 font-light text-xl -mt-3">:</span>
           <div className="flex flex-col items-center min-w-[2ch]">
             <span className="text-xl leading-none font-['Space_Grotesk'] text-[#FF5722]">{String(timeLeft.seconds).padStart(2, '0')}</span>
-            <span className="text-[10px] text-gray-500 font-medium tracking-wider">SEC</span>
+            <span className="text-[10px] text-gray-500 font-medium tracking-wider">{t.countdown.sec}</span>
           </div>
         </div>
       </div>

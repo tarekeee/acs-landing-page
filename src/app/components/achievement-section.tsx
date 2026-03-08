@@ -1,11 +1,13 @@
 import { ArrowUpRight } from 'lucide-react';
 import { achievementPosts } from '../content/achievement-posts';
+import { useLanguage } from '../i18n/LanguageContext';
 
 type AchievementSectionProps = {
   onOpenPost: (path: string) => void;
 };
 
 export function AchievementSection({ onOpenPost }: AchievementSectionProps) {
+  const { t } = useLanguage();
   const successStories = achievementPosts.filter((post) => post.section === 'success-stories');
   const memberProjects = achievementPosts.filter((post) => post.section === 'achievements');
 
@@ -14,11 +16,11 @@ export function AchievementSection({ onOpenPost }: AchievementSectionProps) {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-start mb-8">
           <div>
-            <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">CELEBRATING SUCCESS</div>
+            <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">{t.achievement.celebratingSuccess}</div>
             <h2 className="text-5xl md:text-6xl leading-none tracking-tighter">
-              ACHIEVEMENT
+              {t.achievement.title1}
               <br />
-              GALLERY
+              {t.achievement.title2}
             </h2>
           </div>
           <div className="hidden md:block hover:rotate-45 transition-transform duration-500 cursor-pointer">
@@ -27,12 +29,12 @@ export function AchievementSection({ onOpenPost }: AchievementSectionProps) {
         </div>
 
         <p className="text-lg text-gray-600 mb-10 max-w-3xl">
-          Explore memorable achievements and real projects built by our members — showing that anyone can succeed!
+          {t.achievement.description}
         </p>
 
         {/* Success Stories */}
         <div className="mb-12">
-          <div className="text-sm tracking-wide text-gray-500 mb-6 font-medium">SUCCESS STORIES</div>
+          <div className="text-sm tracking-wide text-gray-500 mb-6 font-medium">{t.achievement.successStories}</div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {successStories.map((story) => (
@@ -60,7 +62,7 @@ export function AchievementSection({ onOpenPost }: AchievementSectionProps) {
 
         {/* Member Projects */}
         <div>
-          <div className="text-sm tracking-wide text-gray-500 mb-8 font-medium">MEMBER PROJECTS · DIGITAL WALL</div>
+          <div className="text-sm tracking-wide text-gray-500 mb-8 font-medium">{t.achievement.memberProjects}</div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {memberProjects.map((project) => (
@@ -79,7 +81,7 @@ export function AchievementSection({ onOpenPost }: AchievementSectionProps) {
                   <h4 className="text-lg font-bold text-gray-900 group-hover:text-[#FF5722] transition-colors">
                     {project.title}
                   </h4>
-                  <span className="text-xs text-gray-500">by {project.author}</span>
+                  <span className="text-xs text-gray-500">{t.achievement.by} {project.author}</span>
                 </div>
                 
                 <p className="text-sm text-gray-600 leading-relaxed">
@@ -94,9 +96,9 @@ export function AchievementSection({ onOpenPost }: AchievementSectionProps) {
         <div className="mt-12 bg-[#F5F3F0] p-10 rounded-3xl hover:shadow-xl transition-shadow duration-500">
           <div className="max-w-3xl">
             <p className="text-lg text-gray-600 mb-6">
-              "These achievements prove that anyone can succeed. From competition wins to personal projects, every member contributes to our collective success story."
+              {t.achievement.quote}
             </p>
-            <div className="text-sm tracking-wide text-gray-500 font-medium">— ACS Community</div>
+            <div className="text-sm tracking-wide text-gray-500 font-medium">{t.achievement.quoteSrc}</div>
           </div>
         </div>
       </div>

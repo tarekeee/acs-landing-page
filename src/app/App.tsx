@@ -19,6 +19,7 @@ import { ContactUsPage } from './components/contact-us-page.tsx';
 import { AchievementBlogPage } from './components/achievement-blog-page';
 import { getAchievementPostByPath } from './content/achievement-posts';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './components/ui/dialog';
+import { useLanguage } from './i18n/LanguageContext';
 
 export default function App() {
   const [isRegistrationNoticeOpen, setIsRegistrationNoticeOpen] = useState(false);
@@ -27,6 +28,7 @@ export default function App() {
   const [isNotifySubmitting, setIsNotifySubmitting] = useState(false);
   const [notifySuccess, setNotifySuccess] = useState(false);
   const [notifyError, setNotifyError] = useState<string | null>(null);
+  const { t, isRTL } = useLanguage();
 
 
 
@@ -150,10 +152,10 @@ export default function App() {
         <DialogContent className="max-w-md border-0 rounded-2xl p-0 overflow-hidden">
           <div className="bg-[#F5F3F0] px-6 pt-6 pb-4 border-b border-black/10">
             <DialogHeader>
-              <div className="text-sm tracking-wide text-gray-500 font-medium mb-2">ACS NOTICE</div>
-              <DialogTitle className="text-2xl tracking-tight">Sorry, Registrations Are Closed</DialogTitle>
+              <div className="text-sm tracking-wide text-gray-500 font-medium mb-2">{t.registrationNotice.acsNotice}</div>
+              <DialogTitle className="text-2xl tracking-tight">{t.registrationNotice.title}</DialogTitle>
               <DialogDescription className="text-gray-600 pt-1">
-                Leave your email and we will inform you right away when registrations open.
+                {t.registrationNotice.description}
               </DialogDescription>
             </DialogHeader>
           </div>
@@ -164,14 +166,14 @@ export default function App() {
                 type="email"
                 value={notifyEmail}
                 onChange={(event) => setNotifyEmail(event.target.value)}
-                placeholder="your.email@example.com"
+                placeholder={t.registrationNotice.placeholder}
                 className="w-full rounded-lg border border-black/15 px-3 py-2.5 text-sm outline-none focus:border-[#FF5722]"
                 required
                 disabled={isNotifySubmitting}
               />
 
               {notifySuccess && (
-                <p className="text-sm text-green-700">Thank you. We will notify you as soon as registrations open.</p>
+                <p className="text-sm text-green-700">{t.registrationNotice.thankyou}</p>
               )}
               {notifyError && <p className="text-sm text-red-600">{notifyError}</p>}
 
@@ -181,14 +183,14 @@ export default function App() {
                   onClick={() => setIsRegistrationNoticeOpen(false)}
                   className="border border-black/15 text-gray-700 px-4 py-2.5 rounded-full text-sm tracking-wide hover:bg-black/5 transition-colors"
                 >
-                  Close
+                  {t.registrationNotice.close}
                 </button>
                 <button
                   type="submit"
                   disabled={isNotifySubmitting}
                   className="bg-[#FF5722] text-white px-6 py-2.5 rounded-full text-sm tracking-wide hover:bg-[#E64A19] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {isNotifySubmitting ? 'Submitting...' : 'Notify Me'}
+                  {isNotifySubmitting ? t.registrationNotice.submitting : t.registrationNotice.notifyMe}
                 </button>
               </div>
             </form>

@@ -1,28 +1,14 @@
 import { ArrowUpRight } from 'lucide-react';
-import { log } from 'node:console';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export function PartnersSection() {
-  const partners = [
-    {
-      name: 'Ministry of Youth',
-      note: 'Government endorsement',
-      logo: '/logos/ministry-of-youth.svg',
-    },
-    {
-      name: 'Wilaya of Algiers',
-      note: 'Regional authority backing',
-      logo: '/logos/wilaya-of-algiers.svg',
-    },
-    {
-      name: 'Abderrahmane Laala Youth House',
-      note: 'Host institution',
-      logo: '/logos/youth-house.png',
-    },
-    {
-      name: 'Jisr Numuw Initiative',
-      note: 'Program enabler',
-      logo: '/logos/jisr-numuw.svg',
-    },
+  const { t } = useLanguage();
+
+  const partnerLogos = [
+    '/logos/ministry-of-youth.svg',
+    '/logos/wilaya-of-algiers.svg',
+    '/logos/youth-house.png',
+    '/logos/jisr-numuw.svg',
   ];
 
   return (
@@ -30,11 +16,11 @@ export function PartnersSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-start mb-10">
           <div>
-            <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">OUR ECOSYSTEM</div>
+            <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">{t.partners.ourEcosystem}</div>
             <h2 className="text-5xl md:text-6xl leading-none tracking-tighter">
-              ENABLED
+              {t.partners.title1}
               <br />
-              BY
+              {t.partners.title2}
             </h2>
           </div>
           <div className="hidden md:block hover:rotate-45 transition-transform duration-500 cursor-pointer">
@@ -43,12 +29,12 @@ export function PartnersSection() {
         </div>
 
         <p className="text-lg text-gray-600 mb-8 max-w-2xl">
-          ACS is proud to be supported by these institutions that believe in empowering youth through technology and innovation.
+          {t.partners.description}
         </p>
 
         {/* Partner Badges */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {partners.map((partner, index) => (
+          {t.partners.list.map((partner, index) => (
             <div
               key={index}
               className="group cursor-pointer bg-[#F5F3F0] p-8 rounded-2xl hover:shadow-xl hover:-translate-y-2 transition-all duration-500 flex flex-col items-center text-center"
@@ -56,7 +42,7 @@ export function PartnersSection() {
               {/* Logo Placeholder */}
               <div className="w-24 h-24 mb-6 p-3 bg-white rounded-xl flex items-center justify-center shadow-sm group-hover:shadow-lg transition-shadow duration-300">
                 <img
-                  src={partner.logo}
+                  src={partnerLogos[index]}
                   alt={partner.name}
                   className="max-w-full max-h-full object-contain"
                 />

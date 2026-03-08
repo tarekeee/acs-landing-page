@@ -1,5 +1,6 @@
 import { X, Calendar, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface EventAnnouncementBarProps {
   onRegisterClick: () => void;
@@ -7,6 +8,7 @@ interface EventAnnouncementBarProps {
 
 export function EventAnnouncementBar({ onRegisterClick }: EventAnnouncementBarProps) {
   const [isVisible, setIsVisible] = useState(true);
+  const { t } = useLanguage();
 
   if (!isVisible) return null;
 
@@ -25,10 +27,10 @@ export function EventAnnouncementBar({ onRegisterClick }: EventAnnouncementBarPr
               <Calendar className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
               <img src="/logos/sahra-tech-w.svg" alt="Sahra Tech" className="inline-block w-8 h-8 sm:hidden" />
             <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 min-w-0 flex-1">
-              <span className="font-medium whitespace-nowrap text-sm sm:text-base">📍 March 12th, 2026</span>
+              <span className="font-medium whitespace-nowrap text-sm sm:text-base">{t.announcement.date}</span>
               <span className="hidden sm:inline text-white/90">|</span>
               <span className="text-white/95 text-xs sm:text-base line-clamp-1 sm:line-clamp-none">
-                <img src="/logos/sahra-tech-w.svg" alt="Sahra Tech" className="hidden sm:inline-block lg:w-7 lg:h-7 h-5 w-5 mb-[2px] mr-1" /> @ Youth House Abderehman Lalaa - Workshops, Hackathon, AI Demos & Iftar
+                <img src="/logos/sahra-tech-w.svg" alt="Sahra Tech" className="hidden sm:inline-block lg:w-7 lg:h-7 h-5 w-5 mb-[2px] ltr:mr-1 rtl:ml-1" /> {t.announcement.description}
               </span>
             </div>
           </div>
@@ -38,7 +40,7 @@ export function EventAnnouncementBar({ onRegisterClick }: EventAnnouncementBarPr
               onClick={onRegisterClick}
               className="bg-[#FF5722] text-white px-3 sm:px-4 py-1.5 rounded-md hover:bg-[#E64A19] transition-colors flex items-center gap-1.5 group flex-1 sm:flex-initial justify-center text-sm sm:text-base"
             >
-              <span className="font-medium whitespace-nowrap">Register Now</span>
+              <span className="font-medium whitespace-nowrap">{t.announcement.registerNow}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </button>
             

@@ -1,16 +1,18 @@
 import { Mail, MessageSquare, Share2, ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export function ContactSection() {
+  const { t } = useLanguage();
   return (
     <section id="contact" className="min-h-screen bg-white py-16">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-start mb-10">
           <div>
-            <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">CONNECT WITH US</div>
+            <div className="text-sm tracking-wide text-gray-500 mb-4 font-medium">{t.contact.connectWithUs}</div>
             <h2 className="text-5xl md:text-6xl leading-none tracking-tighter">
-              GET IN
+              {t.contact.title1}
               <br />
-              TOUCH
+              {t.contact.title2}
             </h2>
           </div>
           <div className="hidden md:block hover:rotate-45 transition-transform duration-500 cursor-pointer">
@@ -19,7 +21,7 @@ export function ContactSection() {
         </div>
 
         <p className="text-lg text-gray-600 mb-10 max-w-2xl">
-          Have questions or want to learn more? We'd love to hear from you.
+          {t.contact.description}
         </p>
 
         {/* Contact Cards */}
@@ -33,10 +35,10 @@ export function ContactSection() {
               <Mail className="w-7 h-7 text-white" />
             </div>
             <h3 className="text-xl font-bold mb-3 group-hover:text-[#FF5722] transition-colors">
-              Email
+              {t.contact.email}
             </h3>
             <p className="text-gray-600 text-sm mb-4">
-              Send us a message anytime
+              {t.contact.emailDesc}
             </p>
             <p className="text-sm font-medium text-[#FF5722]">
               contact@acsociety.club
@@ -49,13 +51,13 @@ export function ContactSection() {
               <MessageSquare className="w-7 h-7 text-gray-600" />
             </div>
             <h3 className="text-xl font-bold mb-3 text-gray-700">
-              Discord
+              {t.contact.discord}
             </h3>
             <p className="text-gray-500 text-sm mb-4">
-              Discord is currently unavailable
+              {t.contact.discordDesc}
             </p>
             <p className="text-sm font-medium text-gray-500">
-              Coming soon
+              {t.contact.comingSoon}
             </p>
           </div>
 
@@ -67,10 +69,10 @@ export function ContactSection() {
               <Share2 className="w-7 h-7 text-white" />
             </div>
             <h3 className="text-xl font-bold mb-3">
-              Follow Us
+              {t.contact.followUs}
             </h3>
             <p className="text-white/90 text-sm mb-4">
-              Stay updated on social media
+              {t.contact.followDesc}
             </p>
             <p className="text-sm font-medium">
               @acs_dz
