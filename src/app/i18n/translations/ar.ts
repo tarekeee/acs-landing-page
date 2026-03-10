@@ -311,7 +311,7 @@ const ar: Translations = {
     phonePlaceholder: '+213 XXX XXX XXX',
     phoneError: 'يرجى إدخال رقم هاتفك',
     phoneInvalid: 'استخدم رقم هاتف جزائري صالح (مثال: +213 5XX XXX XXX)',
-    emailLabel: 'عنوان البريد الإلكتروني *',
+    emailLabel: 'عنوان البريد الإلكتروني (اختياري)',
     emailPlaceholder: 'your.email@example.com',
     emailError: 'يرجى إدخال بريدك الإلكتروني',
     emailInvalid: 'يرجى إدخال عنوان بريد إلكتروني صالح',

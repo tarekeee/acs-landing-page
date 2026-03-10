@@ -16,7 +16,7 @@ interface RegistrationFormFullpageProps {
 type FormData = {
   fullName: string;
   phone: string;
-  email: string;
+  email?: string;
   birthdate: string;
   sessions: string[];
   hearAbout: string;
@@ -81,7 +81,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
       const payload = {
         fullName: data.fullName,
         phone: data.phone,
-        email: data.email,
+        email: data.email || '',
         birthdate: data.birthdate,
         gender: '',
         wilaya: '',
@@ -225,7 +225,6 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       id="email"
                       type="email"
                       {...register('email', {
-                        required: t.registration.emailError,
                         pattern: {
                           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                           message: t.registration.emailInvalid

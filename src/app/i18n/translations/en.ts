@@ -329,7 +329,7 @@ const en = {
     phonePlaceholder: '+213 XXX XXX XXX',
     phoneError: 'Please enter your phone number',
     phoneInvalid: 'Use a valid Algerian phone number (e.g., +213 5XX XXX XXX)',
-    emailLabel: 'Email address *',
+    emailLabel: 'Email address (Optional)',
     emailPlaceholder: 'your.email@example.com',
     emailError: 'Please enter your email',
     emailInvalid: 'Please enter a valid email address',
