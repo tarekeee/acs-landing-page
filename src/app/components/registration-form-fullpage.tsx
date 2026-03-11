@@ -16,10 +16,11 @@ interface RegistrationFormFullpageProps {
 type FormData = {
   fullName: string;
   phone: string;
-  email?: string;
+  email: string;
   birthdate: string;
   sessions: string[];
   hearAbout: string;
+  needsAccommodation: boolean;
 };
 
 export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFullpageProps) {
@@ -31,6 +32,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
   const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm<FormData>({
     defaultValues: {
       sessions: [],
+      needsAccommodation: false,
     }
   });
 
@@ -81,12 +83,12 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
       const payload = {
         fullName: data.fullName,
         phone: data.phone,
-        email: data.email || '',
+        email: data.email,
         birthdate: data.birthdate,
         gender: '',
         wilaya: '',
         status: '',
-        pathway: '',
+        pathway: data.needsAccommodation ? 'requires accommodation' : "doesn't require accommodation",
         fieldOfInterest: '',
         sessions: data.sessions.join(', '),
         affiliation: '',
@@ -225,6 +227,7 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                       id="email"
                       type="email"
                       {...register('email', {
+                        required: t.registration.emailError,
                         pattern: {
                           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                           message: t.registration.emailInvalid
@@ -308,6 +311,16 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
                     {errors.hearAbout && (
                       <p className="text-xs sm:text-sm text-[#FF5722] mt-2">{errors.hearAbout.message}</p>
                     )}
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-3 p-3 sm:p-4 border-2 border-black/10 rounded-xl hover:border-black/30 cursor-pointer transition-all">
+                      <Checkbox
+                        checked={watch('needsAccommodation')}
+                        onCheckedChange={(checked) => setValue('needsAccommodation', !!checked)}
+                      />
+                      <span className="text-sm sm:text-base">{t.registration.needsAccommodation}</span>
+                    </label>
                   </div>
 
                   <div className="bg-[#F5F3F0] rounded-xl p-4 sm:p-5">
