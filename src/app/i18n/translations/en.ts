@@ -393,6 +393,13 @@ const en = {
     by: 'By',
   },
 
+  // Event Registration Closed Dialog
+  eventClosed: {
+    title: 'Event Registrations Are Closed',
+    description: 'Sorry, registrations for this event are now closed. Stay tuned for future events!',
+    close: 'Close',
+  },
+
   // Registration Notice Dialog
   registrationNotice: {
     acsNotice: 'ACS NOTICE',

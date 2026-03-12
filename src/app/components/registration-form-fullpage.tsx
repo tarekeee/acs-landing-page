@@ -75,56 +75,8 @@ export function RegistrationFormFullpage({ isOpen, onClose }: RegistrationFormFu
     setValue(fieldName, newArray, { shouldValidate: true, shouldDirty: true });
   };
 
-  const onSubmit = async (data: FormData) => {
-    setIsSubmitting(true);
-    setSubmitError(null);
-
-    try {
-      const payload = {
-        fullName: data.fullName,
-        phone: data.phone,
-        email: data.email,
-        birthdate: data.birthdate,
-        gender: '',
-        wilaya: '',
-        status: '',
-        pathway: data.needsAccommodation ? 'requires accommodation' : "doesn't require accommodation",
-        fieldOfInterest: '',
-        sessions: data.sessions.join(', '),
-        affiliation: '',
-        portfolioLink: '',
-        hearAbout: data.hearAbout,
-        submittedAt: new Date().toISOString(),
-      };
-
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await response.json();
-      
-      if (result.result === 'error') {
-         throw new Error(result.message);
-      }
-
-      setIsSuccess(true);
-      reset({ sessions: [] });
-
-      setTimeout(() => {
-        setIsSuccess(false);
-        onClose();
-      }, 2000);
-
-    } catch (error) {
-      console.error(error);
-      setSubmitError(t.registration.submitError);
-    } finally {
-      setIsSubmitting(false);
-    }
+  const onSubmit = async (_data: FormData) => {
+    setSubmitError('Registrations are closed.');
   };
 
   if (!isOpen) return null;

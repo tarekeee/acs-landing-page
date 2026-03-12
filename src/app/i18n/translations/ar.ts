@@ -374,6 +374,12 @@ const ar: Translations = {
     by: 'بواسطة',
   },
 
+  eventClosed: {
+    title: 'تسجيلات الحدث مغلقة',
+    description: 'عذراً، تسجيلات هذا الحدث مغلقة الآن. ترقبوا الأحداث القادمة!',
+    close: 'إغلاق',
+  },
+
   registrationNotice: {
     acsNotice: 'إشعار ACS',
     title: 'عذراً، التسجيلات مغلقة',

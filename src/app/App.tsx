@@ -23,6 +23,7 @@ import { useLanguage } from './i18n/LanguageContext';
 
 export default function App() {
   const [isRegistrationNoticeOpen, setIsRegistrationNoticeOpen] = useState(false);
+  const [isEventClosedOpen, setIsEventClosedOpen] = useState(false);
   const [pathname, setPathname] = useState(window.location.pathname);
   const [notifyEmail, setNotifyEmail] = useState('');
   const [isNotifySubmitting, setIsNotifySubmitting] = useState(false);
@@ -132,9 +133,9 @@ export default function App() {
 
   return (
     <div className="size-full pb-24 lg:pb-0">
-      <EventAnnouncementBar onRegisterClick={openEventRegistrationForm} />
+      <EventAnnouncementBar onRegisterClick={() => setIsEventClosedOpen(true)} />
       <HeroSection onJoinClick={showRegistrationClosedPopup} />
-      <EventSection onRegisterClick={openEventRegistrationForm} />
+      <EventSection onRegisterClick={() => setIsEventClosedOpen(true)} />
       <WhoWeAreSection />
       <StructureSection onPartnershipClick={() => navigateTo('/contact-us')} />
       <AchievementSection onOpenPost={navigateTo} />
@@ -194,6 +195,26 @@ export default function App() {
                 </button>
               </div>
             </form>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isEventClosedOpen} onOpenChange={setIsEventClosedOpen}>
+        <DialogContent className="max-w-sm border-0 rounded-2xl p-6 text-center">
+          <DialogHeader>
+            <DialogTitle className="text-xl tracking-tight">{t.eventClosed.title}</DialogTitle>
+            <DialogDescription className="text-gray-600 pt-2">
+              {t.eventClosed.description}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center pt-4">
+            <button
+              type="button"
+              onClick={() => setIsEventClosedOpen(false)}
+              className="bg-[#FF5722] text-white px-6 py-2.5 rounded-full text-sm tracking-wide hover:bg-[#E64A19] transition-colors"
+            >
+              {t.eventClosed.close}
+            </button>
           </div>
         </DialogContent>
       </Dialog>
